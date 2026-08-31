@@ -6,6 +6,7 @@ app=Flask(__name__)
 mysql=MySQL(app)
 
 
+app.secret_key='eicwiemcumaehfppiwgqkvr'
 @app.route('/')
 def home():
     return 'hola mundo '

@@ -1,0 +1,167 @@
+# models.py
+
+# --- USUARIO ---
+
+def crear_usuario(mysql, nombre, correo, contrasena_hash, rol='cliente'):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "INSERT INTO usuario (nombre, correo, contrasena, rol) VALUES (%s, %s, %s, %s)",
+        (nombre, correo, contrasena_hash, rol)
+    )
+    mysql.connection.commit()
+    cur.close()
+
+def obtener_usuario_por_correo(mysql, correo):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuario WHERE correo = %s", (correo,))
+    usuario = cur.fetchone()
+    cur.close()
+    return usuario
+
+def obtener_usuario_por_id(mysql, id_usuario):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuario WHERE id_usuario = %s", (id_usuario,))
+    usuario = cur.fetchone()
+    cur.close()
+    return usuario
+
+
+# --- PELICULA ---
+
+def crear_pelicula(mysql, titulo, genero, clasificacion, duracion_minutos, sinopsis, poster_url, estado='proxima'):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        """INSERT INTO pelicula (titulo, genero, clasificacion, duracion_minutos, sinopsis, poster_url, estado)
+           VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+        (titulo, genero, clasificacion, duracion_minutos, sinopsis, poster_url, estado)
+    )
+    mysql.connection.commit()
+    cur.close()
+
+def obtener_peliculas_cartelera(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM pelicula WHERE estado = 'cartelera'")
+    peliculas = cur.fetchall()
+    cur.close()
+    return peliculas
+
+def obtener_pelicula_por_id(mysql, id_pelicula):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM pelicula WHERE id_pelicula = %s", (id_pelicula,))
+    pelicula = cur.fetchone()
+    cur.close()
+    return pelicula
+
+def actualizar_pelicula(mysql, id_pelicula, titulo, genero, clasificacion, duracion_minutos, sinopsis, poster_url, estado):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        """UPDATE pelicula SET titulo=%s, genero=%s, clasificacion=%s, duracion_minutos=%s,
+           sinopsis=%s, poster_url=%s, estado=%s WHERE id_pelicula=%s""",
+        (titulo, genero, clasificacion, duracion_minutos, sinopsis, poster_url, estado, id_pelicula)
+    )
+    mysql.connection.commit()
+    cur.close()
+
+def eliminar_pelicula(mysql, id_pelicula):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM pelicula WHERE id_pelicula = %s", (id_pelicula,))
+    mysql.connection.commit()
+    cur.close()
+
+
+# --- SALA ---
+
+def crear_sala(mysql, nombre, filas, columnas, capacidad_total):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "INSERT INTO sala (nombre, filas, columnas, capacidad_total) VALUES (%s, %s, %s, %s)",
+        (nombre, filas, columnas, capacidad_total)
+    )
+    mysql.connection.commit()
+    cur.close()
+
+def obtener_salas(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM sala")
+    salas = cur.fetchall()
+    cur.close()
+    return salas
+
+
+# --- SILLA ---
+
+def crear_silla(mysql, id_sala, fila, columna, tipo='general'):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "INSERT INTO silla (id_sala, fila, columna, tipo) VALUES (%s, %s, %s, %s)",
+        (id_sala, fila, columna, tipo)
+    )
+    mysql.connection.commit()
+    cur.close()
+
+def obtener_sillas_por_sala(mysql, id_sala):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM silla WHERE id_sala = %s", (id_sala,))
+    sillas = cur.fetchall()
+    cur.close()
+    return sillas
+
+
+# --- FUNCION ---
+
+def crear_funcion(mysql, id_pelicula, id_sala, fecha, hora_inicio, precio_base):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        """INSERT INTO funcion (id_pelicula, id_sala, fecha, hora_inicio, precio_base)
+           VALUES (%s, %s, %s, %s, %s)""",
+        (id_pelicula, id_sala, fecha, hora_inicio, precio_base)
+    )
+    mysql.connection.commit()
+    cur.close()
+
+def obtener_funciones_por_pelicula(mysql, id_pelicula):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM funcion WHERE id_pelicula = %s", (id_pelicula,))
+    funciones = cur.fetchall()
+    cur.close()
+    return funciones
+
+def obtener_funcion_por_id(mysql, id_funcion):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM funcion WHERE id_funcion = %s", (id_funcion,))
+    funcion = cur.fetchone()
+    cur.close()
+    return funcion
+
+
+# --- BOLETA ---
+
+def obtener_sillas_ocupadas_por_funcion(mysql, id_funcion):
+    """RF-13: sillas ya vendidas para esa función (para pintar el mapa)."""
+    cur = mysql.connection.cursor()
+    cur.execute(
+        """SELECT id_silla FROM boleta
+           WHERE id_funcion = %s AND estado != 'cancelada'""",
+        (id_funcion,)
+    )
+    ocupadas = cur.fetchall()
+    cur.close()
+    return ocupadas
+
+def crear_boleta(mysql, id_funcion, id_usuario, id_silla, tipo_boleta, precio, codigo_qr):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        """INSERT INTO boleta (id_funcion, id_usuario, id_silla, tipo_boleta, precio, codigo_qr)
+           VALUES (%s, %s, %s, %s, %s, %s)""",
+        (id_funcion, id_usuario, id_silla, tipo_boleta, precio, codigo_qr)
+    )
+    mysql.connection.commit()
+    cur.close()
+
+def obtener_boletas_por_funcion(mysql, id_funcion):
+    """Para reportes (RF-10)."""
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM boleta WHERE id_funcion = %s", (id_funcion,))
+    boletas = cur.fetchall()
+    cur.close()
+    return boletas
