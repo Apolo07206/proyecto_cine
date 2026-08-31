@@ -14,7 +14,7 @@ app.secret_key='eicwiemcumaehfppiwgqkvr'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] =''
-app.config['MYSQL_DB'] ='proyecto_cine'
+app.config['MYSQL_DB'] ='cine_premier'
 app.config['MYSQL_UNIX_SOCKET'] = '/opt/lampp/var/mysql/mysql.sock'
 
 
