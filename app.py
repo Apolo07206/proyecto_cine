@@ -25,7 +25,7 @@ app.config['MYSQL_UNIX_SOCKET'] = '/opt/lampp/var/mysql/mysql.sock'
 def home():
     return render_template('home.html')
 
-@app.route('/registro')
+@app.route('/registro' ,methods=['GET','POST'])
 def registro():
     return render_template('registro.html')
 

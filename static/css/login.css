@@ -11,6 +11,7 @@ body {
     min-height: 100vh;
     background-color: #161B22;
     font-family: Arial, sans-serif;
+    
 }
 
 .tarjeta-users {
@@ -22,7 +23,9 @@ body {
     padding: 30px 20px;
     color: white;
     border-radius: 15px;
-    box-shadow: 0px 10px 25px #E50914;
+    box-shadow: -10px -10px 25px #E50914,
+                10px 10px 25px orange;
+    animation: aparecerYSubir 1.5s ease-in-out forwards
 }
 
 .tarjeta-users h1 {
@@ -104,4 +107,15 @@ form {
     position: relative;
     right: 34px;
    
+}
+
+@keyframes aparecerYSubir {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Nace 20px más abajo */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);    /* Sube a su posición original */
+  }
 }

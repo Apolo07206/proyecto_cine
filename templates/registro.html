@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registro.css') }}">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <div class="tarjeta-users">
+        <h1>Registrarse</h1>
+        
+        <form action="/registro" method="post">
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+                <input type="name" id="nombre" name="nombre" placeholder="nombre completo" required>
+            </div>
+
+            <div class="campo">
+                <label for="correo">correo</label>
+                <input type="email" id="correo" name="correo" placeholder="ejemplo@gmail.com" required>
+            </div>
+
+            <div class="campo">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
+            </div>
+
+            <div class="campo">
+                <label for="Rol">Rol</label>
+                <input list="roles" placeholder="selecione un Rol" name="Rol" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Iniciar sesión</button>
+        </form>
+
+
+        
+
+        <datalist id="roles">
+            <option value="admin" >admin</option>
+            <option value="cliente">cliente</option>
+            <option value="taquilla">taquilla</option>
+        </datalist>
+
+        <div class="acciones-extra">
+            <a href="{{ url_for('home') }}" class="btn-secundario">Atrás</a>
+        </div>
+    </div>
+</body>
+</html>

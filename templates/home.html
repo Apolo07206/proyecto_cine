@@ -3,25 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/static/img/logo.png" >
-    <link rel="stylesheet" href="{{url_for('static' , filename='/css/home.css')}}">
+    <link rel="icon" type="image/png" href="/img/logo.png" >
+    <link rel="stylesheet" href="{{url_for('static' , filename='css/home.css')}}">
     <title>Cine premier </title>
 </head>
 <body>
     <header class="header-cabezado">
         <div class="navegacion">
                 <div class="titulo-imagen">
-                    <img src="/static/img/logo.png" alt="" width="100px">
+                    <img src="{{url_for('static',filename ='img/logo.png')}}" alt="" width="160px">
                     <h2> Cine premier </h2>
                 </div>
+                
             <nav>
-                <ul>
-                    
+                <ul class="login">
                     <li><a href="{{url_for('login')}}">iniciar sesion </a></li>
                     <li><a href="{{url_for('registro')}}">Registrarse</a></li>
                 </ul>
             </nav>
         </div>
     </header>
+    
+    <main>
+
+
+    </main>
+
+    <footer>
+
+
+    </footer>
 </body>
 </html>

@@ -9,6 +9,7 @@ body{
     
     display: flex;
     text-align: center;
+    
 }
 
 header{
@@ -30,10 +31,21 @@ header{
 }
 
 
-.titulo-imagen,h2{
-    display: flex;
-    align-items: center;
+.titulo-imagen img{
+    position:absolute;
+    bottom: 837px;
     gap: 20px;
-    margin: auto;
+    color: #ffff;
+}
+
+.titulo-imagen h2{
+    position: relative;
+    left: 235px;
+    top: 35px;
     color: white;
+}
+
+.login li a{
+    font-size: 21px;
+    
 }
