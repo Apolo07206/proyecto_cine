@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/static/img/logo.png" >
-    <link rel="stylesheet" href="{{url_for('static' , filename='css/home.css')}}">
+    <link rel="stylesheet" href="{{url_for('static' , filename='/css/home.css')}}">
     <title>Cine premier </title>
 </head>
 <body>
@@ -16,7 +16,9 @@
                 </div>
             <nav>
                 <ul>
-                    <li><a href="login.html">iniciar sesion</a></li>
+                    
+                    <li><a href="{{url_for('login')}}">iniciar sesion </a></li>
+                    <li><a href="{{url_for('registro')}}">Registrarse</a></li>
                 </ul>
             </nav>
         </div>

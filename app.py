@@ -22,7 +22,7 @@ app.config['MYSQL_UNIX_SOCKET'] = '/opt/lampp/var/mysql/mysql.sock'
 # --- MÓDULO CLIENTE ---
 
 @app.route('/')
-def inicio():
+def home():
     return render_template('home.html')
 
 @app.route('/registro')
@@ -78,4 +78,4 @@ def admin_reportes():
 
 
 if __name__ == '__main__':
-    app.run(debug=True,port=8080)
+    app.run(debug=True)

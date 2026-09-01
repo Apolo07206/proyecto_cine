@@ -5,12 +5,14 @@
 }
 
 body{
+    background-color: #161B22;
+    
     display: flex;
     text-align: center;
 }
 
 header{
-    background-color:#011D85;
+    background-color:#031864;
     width: 100%;
     padding: 10px 10px;
 }
@@ -20,15 +22,14 @@ header{
     
 } 
 .navegacion nav,ul,li,a{
+    display: flex;
     list-style: none;
     text-decoration: none;
     color:white;
-    margin-right: 30px;
-    margin-top: 20px;
+    padding: 10px 10px;
 }
-.navegacion:hover a{
-    color:red;
-}
+
+
 .titulo-imagen,h2{
     display: flex;
     align-items: center;
