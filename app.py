@@ -27,7 +27,19 @@ def home():
 
 @app.route('/registro' ,methods=['GET','POST'])
 def registro():
+    if request.method=='POST':
+        nombre=request.form['nombre']
+        correo=request.form['correo']
+        contraseña=request.form['contrasena']
+        rol = request.form.get('rol', 'cliente')
+
+        print(nombre , correo ,contraseña,rol)
+
+        flash('¡Registro exitoso! Ya puedes iniciar sesión.')
+        return redirect(url_for('login'))
+           
     return render_template('registro.html')
+    
 
 @app.route('/login')
 def login():

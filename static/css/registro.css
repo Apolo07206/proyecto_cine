@@ -109,6 +109,23 @@ form {
 }
 
 
+.campo input,
+.campo select {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 0 18px 0 18px;
+    background-color: #0d1117;
+    color: white;
+    outline: none;
+}
+
+.campo select option {
+    background-color: #0d1117;
+    color: white;
+}
+
 @keyframes aparecerYSubir {
   from {
     opacity: 0;
