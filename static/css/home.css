@@ -1,0 +1,34 @@
+*{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    display: flex;
+}
+
+header{
+    background-color:#011D85;
+    width: 100%;
+    padding: 10px 10px;
+}
+.navegacion{
+    display: flex;
+    justify-content: space-between;
+    
+} 
+.navegacion nav,ul,li,a{
+    list-style: none;
+    text-decoration: none;
+    color:white;
+    margin-right: 30px;
+    margin-top: 20px;
+}
+.titulo-imagen,h2{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: auto;
+    color: white;
+}
