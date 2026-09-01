@@ -1,6 +1,7 @@
 from flask import Flask , render_template , request, url_for , flash ,redirect
 from flask_mysqldb import MySQL
 from config import Config
+import models 
 
 
 app=Flask(__name__)
