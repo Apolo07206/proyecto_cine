@@ -11,7 +11,7 @@ body {
     min-height: 100vh;
     background-color: #161B22;
     font-family: Arial, sans-serif;
-    animation: aparecerYSubir 1.5s ease-in-out forwards
+    animation: aparecerYSubir 1.5s ease-in-out forwards;
 }
 
 .tarjeta-users {
@@ -135,4 +135,45 @@ form {
     opacity: 1;
     transform: translateY(0);    /* Sube a su posición original */
   }
+}
+
+
+
+
+
+/* Contenedor principal del fondo */
+.fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* 1. Qué hace la IMG: animación, zoom, filtros, etc. */
+.img-fondo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+    /* Ejemplo de efectos independientes en la IMAGEN */
+    filter: blur(3px);                  /* Aplica desenfoque a la imagen */
+    transform: scale(1.05);             /* Ligero zoom */
+    transition: all 0.5s ease;
+}
+
+/* 2. Qué hace el DIV (.capa-overlay): degradados, colores de superposición, etc. */
+.capa-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;                          /* Queda encima de la imagen */
+    
+    /* Ejemplo de efectos independientes en el DIV */
+    background: rgba(0, 0, 0, 0.5);      /* Malla oscura sobre la imagen */
+    /* O un degradado: background: linear-gradient(to bottom, transparent, #161B22); */
 }
