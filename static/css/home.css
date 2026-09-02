@@ -73,7 +73,14 @@ body{
     border-radius: 12px;
     overflow: hidden;
     text-align: left;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: 0.9s;
+    
+}
+
+
+.tarjeta-pelicula:hover{
+    scale: calc(1.1);
+    box-shadow: -10px -10px 30px #e65100, 10px 10px 30px #e65100;
 }
 
 .poster-wrapper{
