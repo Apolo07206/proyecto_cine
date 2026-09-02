@@ -1,4 +1,5 @@
 # models.py
+import os
 
 # --- USUARIO ---
 
@@ -38,9 +39,24 @@ def crear_pelicula(mysql, titulo, genero, clasificacion, duracion_minutos, sinop
     mysql.connection.commit()
     cur.close()
 
-def obtener_peliculas_cartelera(mysql):
+def crear_pelicula_con_poster(mysql, titulo, genero, clasificacion, duracion_minutos, sinopsis, poster_file, estado='proxima', upload_folder='static/img/posters'):
+    poster_url = ''
+    if poster_file and poster_file.filename:
+        poster_url = poster_file.filename
+        poster_file.save(os.path.join(upload_folder, poster_url))
+    crear_pelicula(mysql, titulo, genero, clasificacion, duracion_minutos, sinopsis, poster_url, estado)
+    return poster_url
+
+def obtener_peliculas(mysql):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM pelicula WHERE estado = 'cartelera'")
+    cur.execute("SELECT * FROM pelicula")
+    peliculas = cur.fetchall()
+    cur.close()
+    return peliculas
+
+def obtener_peliculas_por_estado(mysql, estado):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM pelicula WHERE estado = %s", (estado,))
     peliculas = cur.fetchall()
     cur.close()
     return peliculas

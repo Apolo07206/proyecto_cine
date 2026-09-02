@@ -1,37 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/img/logo.png" >
-    <link rel="stylesheet" href="{{url_for('static' , filename='css/home.css')}}">
-    <title>Cine premier </title>
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='img/logo.png')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+    <title>Cine Premier</title>
 </head>
 <body>
     <header class="header-cabezado">
         <div class="navegacion">
-                <div class="titulo-imagen">
-                    <img src="{{url_for('static',filename ='img/logo.png')}}" alt="" width="160px">
-                    <h2> Cine premier </h2>
-                </div>
-                
+            <div class="titulo-imagen">
+                <img src="{{url_for('static', filename='img/logo.png')}}" alt="Logo Cine Premier" width="60px">
+                <h2>Cine Premier</h2>
+            </div>
+
             <nav>
                 <ul class="login">
-                    <li><a href="{{url_for('login')}}">iniciar sesion </a></li>
+                    <li><a href="{{url_for('login')}}">Iniciar sesión</a></li>
                     <li><a href="{{url_for('registro')}}">Registrarse</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    
+
     <main>
+        {% if cartelera %}
+        <section class="seccion-peliculas">
+            <h2 class="titulo-seccion">En Cartelera</h2>
+            <div class="contenedor-peliculas">
+                {% for pelicula in cartelera %}
+                <div class="tarjeta-pelicula">
+                    <div class="poster-wrapper">
+                        <img src="{{url_for('static', filename='img/posters/' + pelicula.poster_url)}}" alt="{{pelicula.titulo}}">
+                    </div>
+                    <div class="info-pelicula">
+                        <h3>{{pelicula.titulo}}</h3>
+                        <span class="clasificacion clasificacion-{{pelicula.clasificacion|lower}}">{{pelicula.clasificacion}}</span>
+                        <a href="{{url_for('detalle_pelicula', id=pelicula.id_pelicula)}}" class="ver-sinopsis">ℹ️ Ver sinopsis</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
 
+        {% if proximas %}
+        <section class="seccion-peliculas">
+            <h2 class="titulo-seccion">Próximamente</h2>
+            <div class="contenedor-peliculas">
+                {% for pelicula in proximas %}
+                <div class="tarjeta-pelicula">
+                    <div class="poster-wrapper">
+                        <img src="{{url_for('static', filename='img/posters/' + pelicula.poster_url)}}" alt="{{pelicula.titulo}}">
+                    </div>
+                    <div class="info-pelicula">
+                        <h3>{{pelicula.titulo}}</h3>
+                        <span class="clasificacion clasificacion-{{pelicula.clasificacion|lower}}">{{pelicula.clasificacion}}</span>
+                        <a href="{{url_for('detalle_pelicula', id=pelicula.id_pelicula)}}" class="ver-sinopsis">ℹ️ Ver sinopsis</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
 
+        {% if finalizadas %}
+        <section class="seccion-peliculas">
+            <h2 class="titulo-seccion">Finalizadas</h2>
+            <div class="contenedor-peliculas">
+                {% for pelicula in finalizadas %}
+                <div class="tarjeta-pelicula">
+                    <div class="poster-wrapper">
+                        <img src="{{url_for('static', filename='img/posters/' + pelicula.poster_url)}}" alt="{{pelicula.titulo}}">
+                    </div>
+                    <div class="info-pelicula">
+                        <h3>{{pelicula.titulo}}</h3>
+                        <span class="clasificacion clasificacion-{{pelicula.clasificacion|lower}}">{{pelicula.clasificacion}}</span>
+                        <a href="{{url_for('detalle_pelicula', id=pelicula.id_pelicula)}}" class="ver-sinopsis">ℹ️ Ver sinopsis</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
     </main>
 
     <footer>
-
-
+        <p>&copy; 2026 Cine Premier</p>
     </footer>
 </body>
 </html>

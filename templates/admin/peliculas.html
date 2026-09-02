@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Peliculas</title>
+</head>
+<body>
+    <h1>Administrar Peliculas</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p style="color: green;">{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h2>Agregar pelicula</h2>
+    <form action="/admin/peliculas" method="post" enctype="multipart/form-data">
+        <input type="text" name="titulo" placeholder="Titulo de la pelicula" required><br>
+        <input type="text" name="genero" placeholder="Genero" required><br>
+        <input type="text" name="clasificacion" placeholder="Clasificacion (A, B, B15, C)" required><br>
+        <input type="number" name="duracion_minutos" placeholder="Duracion en minutos" required><br>
+        <textarea name="sinopsis" placeholder="Sinopsis" rows="4" cols="50"></textarea><br>
+        <select name="estado">
+            <option value="proxima">Proxima</option>
+            <option value="cartelera">Cartelera</option>
+            <option value="finalizada">Finalizada</option>
+        </select><br>
+        <label>Poster:</label>
+        <input type="file" name="poster_url" accept="image/*"><br><br>
+        <button type="submit">Guardar</button>
+    </form>
+
+    <h2>Peliculas existentes</h2>
+    {% if peliculas %}
+        <table border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Genero</th>
+                    <th>Clasificacion</th>
+                    <th>Duracion</th>
+                    <th>Estado</th>
+                    <th>Poster</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in peliculas %}
+                <tr>
+                    <td>{{ p.titulo }}</td>
+                    <td>{{ p.genero }}</td>
+                    <td>{{ p.clasificacion }}</td>
+                    <td>{{ p.duracion_minutos }} min</td>
+                    <td>{{ p.estado }}</td>
+                    <td>{{ p.poster_url }}</td>
+                    <td>
+                        <a href="/admin/peliculas/editar/{{p.id_pelicula}}">actualizar</a>
+                    </td>
+                    <td>
+                        <form action="/admin/peliculas/eliminar/{{p.id_pelicula}}" method="POST" style="display:inline;">
+                            <button type="submit" style="background:none;border:none;color:blue;cursor:pointer;font:inherit;text-decoration:underline;padding:0;">eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay peliculas registradas.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('admin_dashboard') }}">Volver al dashboard</a>
+</body>
+</html>

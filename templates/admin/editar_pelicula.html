@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Editar Pelicula</title>
+</head>
+<body>
+    <h1>Editar Pelicula</h1>
+
+    <h2>{{ pelicula.titulo }}</h2>
+    <form action="/admin/peliculas/editar/{{pelicula.id_pelicula}}" method="post" enctype="multipart/form-data">
+        <input type="text" name="titulo" value="{{ pelicula.titulo }}" required><br>
+        <input type="text" name="genero" value="{{ pelicula.genero }}" required><br>
+        <input type="text" name="clasificacion" value="{{ pelicula.clasificacion }}" placeholder="Clasificacion (A, B, B15, C)" required><br>
+        <input type="number" name="duracion_minutos" value="{{ pelicula.duracion_minutos }}" placeholder="Duracion en minutos" required><br>
+        <textarea name="sinopsis" placeholder="Sinopsis" rows="4" cols="50">{{ pelicula.sinopsis }}</textarea><br>
+        <select name="estado">
+            <option value="proxima" {% if pelicula.estado == 'proxima' %}selected{% endif %}>Proxima</option>
+            <option value="cartelera" {% if pelicula.estado == 'cartelera' %}selected{% endif %}>Cartelera</option>
+            <option value="finalizada" {% if pelicula.estado == 'finalizada' %}selected{% endif %}>Finalizada</option>
+        </select><br>
+        <label>Poster:</label>
+        <input type="file" name="poster_url" accept="image/*"><br><br>
+        <button type="submit">Guardar cambios</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('admin_peliculas') }}">Volver a peliculas</a>
+</body>
+</html>
