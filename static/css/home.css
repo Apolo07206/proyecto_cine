@@ -61,6 +61,43 @@ body {
     color: #f9a825;
 }
 
+/* ---------- USUARIO AUTENTICADO ---------- */
+.usuario-bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.usuario-bloque:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.usuario-icono {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+    display: block;
+}
+
+.usuario-nombre {
+    font-size: 13px;
+    color: #ffffff;
+    margin-top: 4px;
+    text-align: center;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* ---------- GRID DE PELÍCULAS ---------- */
 .seccion-peliculas {
     padding: 30px 20px;

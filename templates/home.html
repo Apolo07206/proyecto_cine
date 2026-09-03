@@ -17,8 +17,16 @@
 
             <nav>
                 <ul class="login">
+                    {% if session.get('user_id') %}
+                    <li class="usuario-bloque" title="{{ session['nombre'] }}">
+                        <img src="{{url_for('static', filename='img/icono_de_usuario.png')}}" alt="Usuario" class="usuario-icono">
+                        <span class="usuario-nombre">{{ session['nombre'] }}</span>
+                    </li>
+                    <li><a href="{{url_for('logout')}}">Cerrar sesión</a></li>
+                    {% else %}
                     <li><a href="{{url_for('login')}}">Iniciar sesión</a></li>
                     <li><a href="{{url_for('registro')}}">Registrarse</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
