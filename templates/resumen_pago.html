@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resumen_pago.css') }}">
+
+<main class="contenedor-pago">
+    <div class="tarjeta-pago">
+        <h2>💳 Resumen de Pago y Facturación</h2>
+
+        <!--  Tipo Factura -->
+        <div class="factura-resumen">
+            <h3>Detalle de la Compra</h3>
+            <div class="fila-factura">
+                <span>Asientos seleccionados:</span>
+                <strong>{{ asientos }}</strong>
+            </div>
+            <div class="fila-factura total">
+                <span>Total a Pagar:</span>
+                <strong>${{ "{:,.0f}".format(total|float) }} COP</strong>
+            </div>
+        </div>
+
+        <!-- Datos de Pago Virtual aqui iba mi codigo de carpeta personal, cambialo ferney y pon el tuyo -->
+        <form action="{{ url_for('procesar_pago') }}" method="POST" class="form-pago">
+            <input type="hidden" name="asientos" value="{{ asientos }}">
+            <input type="hidden" name="total" value="{{ total }}">
+
+            <h3>Datos de Tarjeta / Pago Virtual</h3>
+
+            <div class="grupo-campo">
+                <label for="nombre">Nombre Titular:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
+            </div>
+
+            <div class="grupo-campo">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+            </div>
+
+            <div class="grupo-campo">
+                <label for="tarjeta">Número de Tarjeta / Cuenta Virtual:</label>
+                <input type="text" id="tarjeta" name="tarjeta" placeholder="0000 0000 0000 0000" maxlength="16" required>
+            </div>
+
+            <div class="fila-doble">
+                <div class="grupo-campo">
+                    <label for="expiracion">Vencimiento (MM/AA):</label>
+                    <input type="text" id="expiracion" name="expiracion" placeholder="12/28" maxlength="5" required>
+                </div>
+                <div class="grupo-campo">
+                    <label for="cvv">CVV:</label>
+                    <input type="password" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-confirmar-pago">Comprar ${{ "{:,.0f}".format(total|float) }} COP</button>
+        </form>
+    </div>
+</main>
+{% endblock %}

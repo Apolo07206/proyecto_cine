@@ -1,0 +1,110 @@
+.contenedor-pago {
+    padding: 40px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.tarjeta-pago {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
+.tarjeta-pago h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.tarjeta-pago h3 {
+    font-size: 15px;
+    color: #f9a825;
+    margin-bottom: 12px;
+}
+
+.factura-resumen {
+    background-color: #0d1117;
+    border: 1px dashed #30363d;
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.fila-factura {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #c9d1d9;
+}
+
+.fila-factura.total {
+    border-top: 1px solid #30363d;
+    padding-top: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    color: white;
+}
+
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.grupo-campo label {
+    font-size: 13px;
+    color: #8b949e;
+    margin-bottom: 6px;
+}
+
+.grupo-campo input {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.grupo-campo input:focus {
+    border-color: #e65100;
+}
+
+.fila-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.btn-confirmar-pago {
+    display: block;
+    width: 100%;
+    background-color: #e65100;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-confirmar-pago:hover {
+    background-color: #f9a825;
+    color: #111;
+}

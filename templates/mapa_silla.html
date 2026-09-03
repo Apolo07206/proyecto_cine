@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mapa_silla.css') }}">
+    <title>Selección de Asientos - Cine Premier</title>
+</head>
+<body>
+
+    <header class="header-cabezado">
+        <div class="navegacion">
+            <div class="titulo-imagen">
+                <a href="{{ url_for('home') }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Cine Premier" width="60px">
+                    <h2>Cine Premier</h2>
+                </a>
+            </div>
+
+            <nav>
+                <ul class="login">
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="contenedor-sala">
+        <h2 class="titulo-seccion-sala">Selección de Asientos</h2>
+
+        <!-- Leyenda de Asientos -->
+        <div class="leyenda">
+            <div class="item-leyenda"><span class="asiento-demo vip"></span> VIP</div>
+            <div class="item-leyenda"><span class="asiento-demo estandar"></span> Estándar</div>
+            <div class="item-leyenda"><span class="asiento-demo preferencial"></span> Preferencial</div>
+            <div class="item-leyenda"><span class="asiento-demo seleccionado"></span> Seleccionado</div>
+        </div>
+
+        <div class="pantalla">PANTALLA</div>
+
+        <div class="sala" id="sala"></div>
+        <div class="numeros-inferiores" id="numeros-inferiores"></div>
+
+        <!-- Formulario redirigido a Selección de Boletas -->
+        <form action="{{ url_for('seleccion_boletas') }}" method="GET" id="form-asientos">
+            <input type="hidden" name="asientos" id="input-asientos">
+            
+            <div class="resumen">
+                <div class="info-resumen">
+                    <p>Asientos seleccionados: <strong id="lista-asientos">Ninguno</strong></p>
+                    <p>Cantidad total: <strong id="total-asientos">0</strong></p>
+                </div>
+                <button type="submit" id="btn-boletas" class="btn-comprar" disabled>Seleccionar Boletas</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Cine Premier</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/mapa_silla.js') }}"></script>
+</body>
+</html>

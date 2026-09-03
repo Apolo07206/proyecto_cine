@@ -1,0 +1,128 @@
+.contenedor-boletas {
+    padding: 40px 20px;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.tarjeta-boletas {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.tarjeta-boletas h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 12px;
+}
+
+.tabla-contenedor {
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.tabla-asientos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.tabla-asientos th {
+    background-color: #031864;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.tabla-asientos td {
+    padding: 12px;
+    border-bottom: 1px solid #30363d;
+    font-size: 15px;
+}
+
+.badge-asiento {
+    background-color: #30363d;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.badge-tipo {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge-tipo.vip { background-color: #2e7d32; color: white; }
+.badge-tipo.estándar { background-color: #e65100; color: white; }
+.badge-tipo.preferencial { background-color: #f9a825; color: #111; }
+
+.precio {
+    font-weight: bold;
+    color: #f5f5f5;
+}
+
+.total-seccion {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-seccion p {
+    color: #8b949e;
+    font-size: 16px;
+}
+
+.total-seccion h3 {
+    color: #f9a825;
+    font-size: 24px;
+}
+
+.btn-comprar {
+    background-color: #e65100;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-comprar:hover {
+    background-color: #f9a825;
+    color: #111;
+    transform: translateY(-2px);
+}
+
+.sin-asientos {
+    padding: 20px 0;
+}
+
+.btn-volver {
+    display: inline-block;
+    margin-top: 15px;
+    color: #64b5f6;
+    text-decoration: none;
+}
+
+.btn-volver:hover {
+    text-decoration: underline;
+}

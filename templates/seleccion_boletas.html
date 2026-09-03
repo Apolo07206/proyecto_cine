@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seleccion_boletas.css') }}">
+    <title>Detalle de Boletas - Cine Premier</title>
+</head>
+<body>
+
+    <header class="header-cabezado">
+        <div class="navegacion">
+            <div class="titulo-imagen">
+                <a href="{{ url_for('home') }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Cine Premier" width="60px">
+                    <h2>Cine Premier</h2>
+                </a>
+            </div>
+
+            <nav>
+                <ul class="login">
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="contenedor-boletas">
+        <div class="tarjeta-boletas">
+            <h2>🎟️ Resumen de Boletas Seleccionadas</h2>
+
+            {% if asientos %}
+            <div class="tabla-contenedor">
+                <table class="tabla-asientos">
+                    <thead>
+                        <tr>
+                            <th>Asiento</th>
+                            <th>Tipo</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in asientos %}
+                        <tr>
+                            <td><span class="badge-asiento">{{ item.codigo }}</span></td>
+                            <td><span class="badge-tipo {{ item.tipo|lower }}">{{ item.tipo }}</span></td>
+                            <td class="precio">${{ "{:,.0f}".format(item.precio) }} COP</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="total-seccion">
+                <p>Total a pagar:</p>
+                <h3>${{ "{:,.0f}".format(total) }} COP</h3>
+            </div>
+
+            <form action="{{ url_for('resumen_pago') }}" method="GET" class="acciones-pago">
+                <input type="hidden" name="asientos" value="{{ asientos_raw }}">
+                <input type="hidden" name="total" value="{{ total }}">
+                <button type="submit" class="btn-comprar">Proceder al Pago 💳</button>
+            </form>
+            {% else %}
+            <div class="sin-asientos">
+                <p>No has seleccionado ningún asiento.</p>
+                <a href="{{ url_for('mapa_silla') }}" class="btn-volver">⬅ Volver al mapa de sillas</a>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Cine Premier</p>
+    </footer>
+
+</body>
+</html>
