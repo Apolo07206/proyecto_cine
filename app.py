@@ -37,6 +37,20 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def role_required(role):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if 'user_id' not in session:
+                flash('Debes iniciar sesión para acceder a esta página.')
+                return redirect(url_for('login'))
+            if session.get('rol') != role:
+                flash('No tienes permiso para acceder a esta página.')
+                return redirect(url_for('home'))
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+
 
 # --- MÓDULO CLIENTE ---
 
@@ -87,7 +101,9 @@ def login():
             session['user_id'] = usuario['id_usuario']
             session['nombre'] = usuario['nombre']
             session['rol'] = usuario.get('rol', 'cliente')
-            return redirect(url_for('seleccion_boletas'))
+            if session['rol'] == 'admin':
+                return redirect(url_for('admin_dashboard'))
+            return redirect(url_for('usuario_panel'))
         else:
             flash('Correo o contraseña incorrectos.')
             return redirect(url_for('login'))
@@ -100,6 +116,13 @@ def logout():
     session.clear()
     flash('Has cerrado sesión correctamente.')
     return redirect(url_for('login'))
+
+
+@app.route('/usuario')
+@login_required
+def usuario_panel():
+    usuario = models.obtener_usuario_por_id(mysql, session['user_id'])
+    return render_template('usuario.html', usuario=usuario)
 
 
 @app.route('/boletas')
@@ -129,13 +152,13 @@ def confirmacion():
 # --- MÓDULO ADMIN ---
 
 @app.route('/admin')
-@login_required
+@role_required('admin')
 def admin_dashboard():
     return render_template('admin/dashboard.html')
 
 
 @app.route('/admin/peliculas', methods=['GET', 'POST'])
-@login_required
+@role_required('admin')
 def admin_peliculas():
     if request.method == 'POST':
         titulo = request.form['titulo']
@@ -161,21 +184,21 @@ def admin_peliculas():
 
 
 @app.route('/admin/peliculas/eliminar/<string:id_pelicula>', methods=['POST'])
-@login_required
+@role_required('admin')
 def eliminar(id_pelicula):
     models.eliminar_pelicula(mysql, id_pelicula)
     return redirect(url_for('admin_peliculas'))
 
 
 @app.route('/admin/peliculas/editar/<string:id_pelicula>', methods=['GET'])
-@login_required
+@role_required('admin')
 def editar_pelicula_form(id_pelicula):
     pelicula = models.obtener_pelicula_por_id(mysql, id_pelicula)
     return render_template('admin/editar_pelicula.html', pelicula=pelicula)
 
 
 @app.route('/admin/peliculas/editar/<string:id_pelicula>', methods=['POST'])
-@login_required
+@role_required('admin')
 def guardar_pelicula(id_pelicula):
     titulo = request.form['titulo']
     genero = request.form['genero']
@@ -197,19 +220,19 @@ def guardar_pelicula(id_pelicula):
 
 
 @app.route('/admin/salas')
-@login_required
+@role_required('admin')
 def admin_salas():
     return render_template('admin/salas.html')
 
 
 @app.route('/admin/funciones')
-@login_required
+@role_required('admin')
 def admin_funciones():
     return render_template('admin/funciones.html')
 
 
 @app.route('/admin/reportes')
-@login_required
+@role_required('admin')
 def admin_reportes():
     return render_template('admin/reportes.html')
 

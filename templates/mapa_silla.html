@@ -22,9 +22,15 @@
             <nav>
                 <ul class="login">
                     {% if session.get('user_id') %}
-                    <li class="usuario-bloque" title="{{ session['nombre'] }}">
-                        <img src="{{ url_for('static', filename='img/icono_de_usuario.png') }}" alt="Usuario" class="usuario-icono">
-                        <span class="usuario-nombre">{{ session['nombre'] }}</span>
+                    <li>
+                        {% if session.get('rol') == 'admin' %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="usuario-bloque" title="{{ session['nombre'] }}">
+                        {% else %}
+                        <a href="{{ url_for('usuario_panel') }}" class="usuario-bloque" title="{{ session['nombre'] }}">
+                        {% endif %}
+                            <img src="{{ url_for('static', filename='img/icono_de_usuario.png') }}" alt="Usuario" class="usuario-icono">
+                            <span class="usuario-nombre">{{ session['nombre'] }}</span>
+                        </a>
                     </li>
                     <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
                     {% else %}

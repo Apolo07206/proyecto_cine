@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{{url_for('static', filename='img/logo.png')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/admin.css')}}">
-    <title>Admin - Dashboard | Cine Premier</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/usuario.css')}}">
+    <title>Mi Cuenta - Cine Premier</title>
 </head>
 <body>
     <header class="header-cabezado">
@@ -21,7 +21,7 @@
             <nav>
                 <ul>
                     <li class="usuario-bloque" title="{{ session['nombre'] }}">
-                        <img src="{{url_for('static', filename='img/icono_de_usuario.png')}}" alt="Admin" class="usuario-icono">
+                        <img src="{{url_for('static', filename='img/icono_de_usuario.png')}}" alt="Usuario" class="usuario-icono">
                         <span class="usuario-nombre">{{ session['nombre'] }}</span>
                     </li>
                     <li><a href="{{url_for('logout')}}">Cerrar sesión</a></li>
@@ -30,29 +30,26 @@
         </div>
     </header>
 
-    <main class="contenedor-admin">
-        <h1 class="titulo-admin">Panel de Administración</h1>
+    <main class="contenedor-usuario">
+        <div class="tarjeta-usuario">
+            <div class="avatar-grande">
+                <img src="{{url_for('static', filename='img/icono_de_usuario.png')}}" alt="Usuario">
+            </div>
+            <h2>{{ usuario.nombre }}</h2>
+            <p class="correo-usuario">{{ usuario.correo }}</p>
+            <span class="rol-badge rol-{{ usuario.rol }}">{{ usuario.rol|capitalize }}</span>
+        </div>
 
-        <div class="grid-admin">
-            <a href="{{ url_for('admin_peliculas') }}" class="admin-card">
-                <span class="admin-icono">🎬</span>
-                <h3>Películas</h3>
-                <p>Crear, editar y eliminar películas</p>
+        <div class="acciones-usuario">
+            <a href="{{ url_for('mapa_silla') }}" class="accion-card">
+                <span class="accion-icono">🎟️</span>
+                <h3>Comprar Boletas</h3>
+                <p>Selecciona tu función y aparta tu asiento</p>
             </a>
-            <a href="{{ url_for('admin_salas') }}" class="admin-card">
-                <span class="admin-icono">🎭</span>
-                <h3>Salas</h3>
-                <p>Gestionar salas y capacidad</p>
-            </a>
-            <a href="{{ url_for('admin_funciones') }}" class="admin-card">
-                <span class="admin-icono">🕐</span>
-                <h3>Funciones</h3>
-                <p>Programar funciones por sala</p>
-            </a>
-            <a href="{{ url_for('admin_reportes') }}" class="admin-card">
-                <span class="admin-icono">📊</span>
-                <h3>Reportes</h3>
-                <p>Ver ventas e ingresos</p>
+            <a href="{{ url_for('home') }}" class="accion-card">
+                <span class="accion-icono">🎬</span>
+                <h3>Ver Cartelera</h3>
+                <p>Consulta las películas en función</p>
             </a>
         </div>
     </main>

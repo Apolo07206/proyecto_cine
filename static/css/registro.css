@@ -19,16 +19,17 @@ body {
     flex-direction: column;
     align-items: center;
     background-color:#161B22;
-    width: 320px;
-    padding: 30px 20px;
+    width: 440px;
+    padding:60px 40px;
     color: white;
     border-radius: 15px;
-    box-shadow: -10px -10px 35px rgb(27, 27, 255),10px 10px 35px rgb(2, 157, 2) ;
+    box-shadow: -10px -10px 25px #E50914,
+                10px 10px 25px orange ;
 
 }
 
 .tarjeta-users h1 {
-    font-size: 1.5rem;
+    font-size: 1.9rem;
     margin-bottom: 55px;
 }
 
@@ -47,14 +48,15 @@ form {
 }
 
 .campo label {
-    font-size: 0.9rem;
+    font-size: 1.15rem;
     color: #c9d1d9;
 }
 
 .campo input {
     width: 100%;
-    height: 40px;
-    padding: 0 10px;
+    height: 50px;
+    font-size: 1.08rem;
+    padding: 0 14px;
     border: none;
     border-radius: 0 18px 0 18px ;
     background-color: #0d1117;
@@ -69,7 +71,8 @@ form {
 
 .btn-primary {
     width: 100%;
-    height: 40px;
+    height: 50px;
+    font-size: 1.15rem;
     margin-top: 10px;
     background-color:#E50914;
     border: none;
@@ -77,16 +80,23 @@ form {
     color: #161B22;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.5s;
+}
+
+.btn-primary:hover{
+    color: white;
 }
 
 
 .acciones-extra {
     margin-top: 15px;
     text-align: center;
+    font-size: 18px;
 }
 
 .btn-secundario {
     color: #8b949e;
+    font-size: 1.1rem;
     text-decoration: none;
 }
 
@@ -96,6 +106,7 @@ form {
 .btn-tercer{
     text-decoration: none;
     color: #8b949e;
+    font-size: 1.1rem;
     cursor: pointer;
 }
 .btn-tercer:hover{
@@ -112,8 +123,9 @@ form {
 .campo input,
 .campo select {
     width: 100%;
-    height: 40px;
-    padding: 0 10px;
+    height: 50px;
+    font-size: 1.08rem;
+    padding: 0 14px;
     border: none;
     border-radius: 0 18px 0 18px;
     background-color: #0d1117;

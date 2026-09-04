@@ -11,21 +11,27 @@
     <header class="header-cabezado">
         <div class="navegacion">
             <div class="titulo-imagen">
-                <img src="{{url_for('static', filename='img/logo.png')}}" alt="Logo Cine Premier" width="60px">
+                <img src="{{url_for('static', filename='img/logo_cortado.png')}}" alt="Logo Cine Premier" width="80px">
                 <h2>Cine Premier</h2>
             </div>
 
             <nav>
-                <ul class="login">
+                <ul >
                     {% if session.get('user_id') %}
-                    <li class="usuario-bloque" title="{{ session['nombre'] }}">
-                        <img src="{{url_for('static', filename='img/icono_de_usuario.png')}}" alt="Usuario" class="usuario-icono">
-                        <span class="usuario-nombre">{{ session['nombre'] }}</span>
+                    <li>
+                        {% if session.get('rol') == 'admin' %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="usuario-bloque" title="{{ session['nombre'] }}">
+                        {% else %}
+                        <a href="{{ url_for('usuario_panel') }}" class="usuario-bloque" title="{{ session['nombre'] }}">
+                        {% endif %}
+                            <img src="{{url_for('static', filename='img/icono_de_usuario.png')}}" alt="Usuario" class="usuario-icono">
+                            <span class="usuario-nombre">{{ session['nombre'] }}</span>
+                        </a>
                     </li>
                     <li><a href="{{url_for('logout')}}">Cerrar sesión</a></li>
                     {% else %}
-                    <li><a href="{{url_for('login')}}">Iniciar sesión</a></li>
-                    <li><a href="{{url_for('registro')}}">Registrarse</a></li>
+                    <li><a href="{{url_for('login')}}" >Iniciar sesión</a></li >
+                    <li><a href="{{url_for('registro')}}" >Registrarse</a></li >
                     {% endif %}
                 </ul>
             </nav>
