@@ -140,9 +140,9 @@ body {
 
 /* Hover: Sobresale ligeramente sin tapar las demás */
 .tarjeta-pelicula:hover {
-    transform: translateY(-8px) scale(1.03);
+    transform: translateY(-8px) scale(1.04);
     box-shadow: 0 12px 25px rgba(230, 81, 0, 0.4);
-    border-color: #e65100;
+    border-color: -12px 12px 12px #e65100;
 }
 
 .poster-wrapper {

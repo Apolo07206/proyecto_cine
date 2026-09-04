@@ -225,10 +225,34 @@ def admin_salas():
     return render_template('admin/salas.html')
 
 
-@app.route('/admin/funciones')
+@app.route('/admin/funciones', methods=['GET', 'POST'])
 @role_required('admin')
 def admin_funciones():
-    return render_template('admin/funciones.html')
+    if request.method == 'POST':
+        if models.funcion_existe(mysql, request.form['sala'],
+                                 request.form['fecha'], request.form['hora']):
+            flash('Ya existe una función en esa sala a esa hora.', 'error')
+        else:
+            models.crear_funcion(mysql,
+                request.form['pelicula'], request.form['sala'],
+                request.form['fecha'], request.form['hora'], request.form['precio'])
+            flash('Función guardada correctamente')
+        return redirect(url_for('admin_funciones'))
+    peliculas = models.obtener_peliculas_por_estado(mysql, 'cartelera')
+    salas = models.obtener_salas(mysql)
+    funciones = models.obtener_funciones(mysql)
+    return render_template('admin/funciones.html', peliculas=peliculas,
+                           salas=salas, funciones=funciones)
+
+
+@app.route('/admin/funciones/eliminar/<int:id_funcion>', methods=['POST'])
+@role_required('admin')
+def eliminar_funcion(id_funcion):
+    if models.eliminar_funcion(mysql, id_funcion):
+        flash('Función eliminada')
+    else:
+        flash('No se puede eliminar: la función ya tiene boletas vendidas.', 'error')
+    return redirect(url_for('admin_funciones'))
 
 
 @app.route('/admin/reportes')

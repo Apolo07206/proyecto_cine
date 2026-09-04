@@ -142,6 +142,43 @@ def obtener_funciones_por_pelicula(mysql, id_pelicula):
     cur.close()
     return funciones
 
+def obtener_funciones(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT f.*, p.titulo, s.nombre AS nombre_sala
+        FROM funcion f
+        JOIN pelicula p ON p.id_pelicula = f.id_pelicula
+        JOIN sala s ON s.id_sala = f.id_sala
+        ORDER BY f.fecha, f.hora_inicio
+    """)
+    funciones = cur.fetchall()
+    cur.close()
+    return funciones
+
+def eliminar_funcion(mysql, id_funcion):
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("DELETE FROM funcion WHERE id_funcion = %s", (id_funcion,))
+        mysql.connection.commit()
+        exito = True
+    except Exception:
+        mysql.connection.rollback()
+        exito = False
+    finally:
+        cur.close()
+    return exito
+
+def funcion_existe(mysql, id_sala, fecha, hora_inicio):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        """SELECT id_funcion FROM funcion
+           WHERE id_sala = %s AND fecha = %s AND hora_inicio = %s""",
+        (id_sala, fecha, hora_inicio)
+    )
+    existe = cur.fetchone() is not None
+    cur.close()
+    return existe
+
 def obtener_funcion_por_id(mysql, id_funcion):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM funcion WHERE id_funcion = %s", (id_funcion,))

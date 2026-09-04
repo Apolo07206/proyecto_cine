@@ -84,8 +84,8 @@ body{
 
 /* Formulario  en grid */
 
-.Form-grip{
-    
+.form-grip{
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
     align-items: flex-end;
@@ -153,4 +153,43 @@ body{
 }
 .data-table tbody tr:hover{
     background-color: #000000;
+}
+
+.volver-dashboard{
+    background-color: #238636;
+    max-width: 200px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.volver{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.6s;
+    margin-bottom: 60px;
+}
+.volver:hover{
+    scale: calc(1.1);
+    transform: translateY(-10px);
+}
+
+/* Mensajes flash */
+.flash-message{
+    text-align: center;
+    font-weight: 600;
+    margin: 16px 0;
+}
+.flash-error{
+    color: #f44336;
+}
+.flash-success{
+    color: #4caf50;
+}
+
+/* Celda sin datos */
+.texto-centrado{
+    text-align: center;
 }
