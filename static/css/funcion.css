@@ -1,0 +1,155 @@
+:root{
+    --bg-admin: #f5f5f5;
+    --bg-card:#161b22;
+    --text-primary:#111827;
+    --text-muted:#6b7280;
+    --primary-red:#e50914;
+    --accent-gold:#f2c94c;
+    --border-color:#e5e7eb;
+    --danger-color:#b00020;
+}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+body{
+    background-color: #0d1117;
+}
+
+.admin-principal{
+    display:flex;
+    min-height: 100vh;
+}
+.sidebar{
+    width: 240px;
+    background-color: #f2c94c;
+    color:#f5f5f5;
+    padding: 20px;
+}
+.sidebar h2{
+    font-size: 1.25rem;
+    margin-bottom: 24px;
+    color:#000;
+}
+.sidebar nav ul{
+    list-style: none;
+}
+.sidebar nav li{
+    margin-bottom: 10px;
+}
+.sidebar nav a{
+    text-decoration: none;
+    color:#000;
+    display: block;
+    padding: 10px 12px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  background-color: #0D1117;
+  color: #FFFFFF;
+}
+.main-content{
+    flex: 1;
+    padding: 32px;
+}
+.content-header{
+    margin-bottom: 24px;
+}
+.content-header h1{
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+}
+.content-header p{
+    color: #fff;
+}
+/* tarjeta para secciones*/
+
+.card-section{
+    background-color:#0455ce;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 35px var(--bg-card);
+    margin-bottom: 24px;
+}
+.card-section h2{
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+/* Formulario  en grid */
+
+.Form-grip{
+    
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    align-items: flex-end;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+.form-group label{
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+.form-group input,
+.form-group select{
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    background-color: #fafafa;
+}
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-red);
+}
+
+.btn{
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.btn:hover{
+    background-color: var(--primary-red);
+    color: white;
+    width: 100%;
+}
+.btn-danger{
+    background-color: var(--danger-color);
+    color: white;
+}
+.btn-sm{
+    padding: 6px 12px;
+    font-size: 0.875rem;
+}
+
+/* Tabla de datos*/
+.table-container{
+    overflow-x:auto;
+}
+.data-table{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+    color:#fff;
+}
+.data-table th,.data-table td{
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+.data-table tbody tr:hover{
+    background-color: #000000;
+}
