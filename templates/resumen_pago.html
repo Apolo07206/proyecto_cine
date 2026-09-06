@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<link rel="icon" type="image/png" href="{{url_for('static', filename='img/logo.png')}}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/resumen_pago.css') }}">
+{% block title %}Resumen de Pago - Cine Premier{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resumen_pago.css') }}">
+{% endblock %}
+
+{% block content %}
 <main class="contenedor-pago">
     <div class="tarjeta-pago">
         <h2>💳 Resumen de Pago y Facturación</h2>

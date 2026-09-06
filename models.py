@@ -103,7 +103,6 @@ def obtener_salas(mysql):
     cur.close()
     return salas
 
-
 # --- SILLA ---
 
 def crear_silla(mysql, id_sala, fila, columna, tipo='general'):

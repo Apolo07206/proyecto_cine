@@ -1,64 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{url_for('static', filename='img/logo.png')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/admin.css')}}">
-    <title>Admin - Dashboard | Cine Premier</title>
-</head>
-<body>
-    <header class="header-cabezado">
-        <div class="navegacion">
-            <div class="titulo-imagen">
-                <a href="{{ url_for('home') }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                    <img src="{{url_for('static', filename='img/logo_cortado.png')}}" alt="Logo Cine Premier" width="80px">
-                    <h2>Cine Premier</h2>
-                </a>
-            </div>
+{% extends 'base.html' %}
 
-            <nav>
-                <ul>
-                    <li class="usuario-bloque" title="{{ session['nombre'] }}">
-                        <img src="{{url_for('static', filename='img/icono_de_usuario.png')}}" alt="Admin" class="usuario-icono">
-                        <span class="usuario-nombre">{{ session['nombre'] }}</span>
-                    </li>
-                    <li><a href="{{url_for('logout')}}">Cerrar sesión</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+{% block title %}Admin - Dashboard | Cine Premier{% endblock %}
 
-    <main class="contenedor-admin">
-        <h1 class="titulo-admin">Panel de Administración</h1>
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
 
-        <div class="grid-admin">
-            <a href="{{ url_for('admin_peliculas') }}" class="admin-card">
-                <span class="admin-icono">🎬</span>
-                <h3>Películas</h3>
-                <p>Crear, editar y eliminar películas</p>
-            </a>
-            <a href="{{ url_for('admin_salas') }}" class="admin-card">
-                <span class="admin-icono">🎭</span>
-                <h3>Salas</h3>
-                <p>Gestionar salas y capacidad</p>
-            </a>
-            <a href="{{ url_for('admin_funciones') }}" class="admin-card">
-                <span class="admin-icono">🕐</span>
-                <h3>Funciones</h3>
-                <p>Programar funciones por sala</p>
-            </a>
-            <a href="{{ url_for('admin_reportes') }}" class="admin-card">
-                <span class="admin-icono">📊</span>
-                <h3>Reportes</h3>
-                <p>Ver ventas e ingresos</p>
-            </a>
-        </div>
-    </main>
+{% block content %}
+<main class="contenedor-admin">
+    <h1 class="titulo-admin">Panel de Administración</h1>
 
-    <footer>
-        <p>&copy; 2026 Cine Premier</p>
-    </footer>
-</body>
-</html>
+    <div class="grid-admin">
+        <a href="{{ url_for('admin_peliculas') }}" class="admin-card">
+            <span class="admin-icono">🎬</span>
+            <h3>Películas</h3>
+            <p>Crear, editar y eliminar películas</p>
+        </a>
+        <a href="{{ url_for('admin_salas') }}" class="admin-card">
+            <span class="admin-icono">🎭</span>
+            <h3>Salas</h3>
+            <p>Gestionar salas y capacidad</p>
+        </a>
+        <a href="{{ url_for('admin_funciones') }}" class="admin-card">
+            <span class="admin-icono">🕐</span>
+            <h3>Funciones</h3>
+            <p>Programar funciones por sala</p>
+        </a>
+        <a href="{{ url_for('admin_reportes') }}" class="admin-card">
+            <span class="admin-icono">📊</span>
+            <h3>Reportes</h3>
+            <p>Ver ventas e ingresos</p>
+        </a>
+    </div>
+</main>
+{% endblock %}

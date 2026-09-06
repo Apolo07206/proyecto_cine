@@ -217,3 +217,65 @@ footer {
     font-size: 14px;
     border-top: 1px solid #30363d;
 }
+
+/* ---------- DETALLE PELÍCULA ---------- */
+.contenedor-detalle {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.tarjeta-detalle {
+    display: flex;
+    gap: 30px;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: left;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.detalle-poster {
+    flex: 0 0 280px;
+    max-width: 280px;
+}
+
+.detalle-poster img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+.detalle-info {
+    flex: 1 1 300px;
+    min-width: 260px;
+}
+
+.detalle-info h2 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.detalle-meta {
+    color: #8b949e;
+    font-size: 15px;
+    margin: 12px 0 20px;
+}
+
+.detalle-info h3 {
+    color: #f9a825;
+    font-size: 16px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.detalle-sinopsis {
+    color: #c9d1d9;
+    line-height: 1.6;
+    font-size: 15px;
+}

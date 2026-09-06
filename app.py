@@ -128,7 +128,27 @@ def usuario_panel():
 @app.route('/boletas')
 @login_required
 def seleccion_boletas():
-    return render_template('seleccion_boletas.html')
+    asientos_raw = request.args.get('asientos', '')
+    precios = {'vip': 25000, 'estandar': 15000, 'preferencial': 12000}
+    asientos = []
+    total = 0
+    if asientos_raw:
+        for codigo in asientos_raw.split(','):
+            codigo = codigo.strip()
+            if not codigo:
+                continue
+            letra = codigo[0].upper()
+            if letra in ('J', 'I'):
+                tipo = 'vip'
+            elif letra in ('B', 'A'):
+                tipo = 'preferencial'
+            else:
+                tipo = 'estandar'
+            precio = precios[tipo]
+            asientos.append({'codigo': codigo, 'tipo': tipo, 'precio': precio})
+            total += precio
+    return render_template('seleccion_boletas.html',
+                           asientos=asientos, asientos_raw=asientos_raw, total=total)
 
 
 @app.route('/mapa')
@@ -140,7 +160,9 @@ def mapa_silla():
 @app.route('/pago')
 @login_required
 def resumen_pago():
-    return render_template('resumen_pago.html')
+    asientos = request.args.get('asientos', '')
+    total = request.args.get('total', '0')
+    return render_template('resumen_pago.html', asientos=asientos, total=total)
 
 
 @app.route('/confirmacion')
