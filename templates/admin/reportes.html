@@ -57,17 +57,30 @@
     {% if id_funcion_seleccionada %}
     <div class="card-section">
         <h3>Detalle de Boletas - Función #{{ id_funcion_seleccionada }}</h3>
-        
+
         <div class="summary-banner">
             <span><strong>Boletas Pagadas:</strong> {{ totales_funcion.cantidad }}</span>
             <span><strong>Ingresos de esta función:</strong> ${{ "%.2f"|format(totales_funcion.ingreso) }}</span>
         </div>
+
+        <!-- Buscador por correo o nombre del comprador -->
+        <form method="GET" action="{{ url_for('admin_reportes') }}" class="buscador-boletas">
+            <input type="hidden" name="id_funcion" value="{{ id_funcion_seleccionada }}">
+            <input type="text" name="correo" class="form-control"
+                   placeholder="Buscar por correo o nombre del comprador..."
+                   value="{{ filtro or '' }}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            {% if filtro %}
+            <a href="{{ url_for('admin_reportes', id_funcion=id_funcion_seleccionada) }}" class="btn btn-secondary">Limpiar</a>
+            {% endif %}
+        </form>
 
         <table class="data-table">
             <thead>
                 <tr>
                     <th># Boleta</th>
                     <th>Usuario</th>
+                    <th>Correo</th>
                     <th>Silla</th>
                     <th>Tipo Boleta</th>
                     <th>Precio</th>
@@ -81,6 +94,7 @@
                 <tr>
                     <td>#{{ boleta.id_boleta }}</td>
                     <td>{{ boleta.usuario }}</td>
+                    <td>{{ boleta.correo }}</td>
                     <td><span class="seat-tag">{{ boleta.silla }}</span></td>
                     <td>{{ boleta.tipo_boleta|capitalize }}</td>
                     <td>${{ "%.2f"|format(boleta.precio) }}</td>
@@ -94,7 +108,13 @@
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="8" class="text-center">No se encontraron boletas registradas para esta función.</td>
+                    <td colspan="9" class="text-center">
+                        {% if filtro %}
+                        No se encontraron compras para "<strong>{{ filtro }}</strong>" en esta función.
+                        {% else %}
+                        No se encontraron boletas registradas para esta función.
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -1,0 +1,176 @@
+/* static/css/recibo.css */
+
+.contenedor-recibo {
+    max-width: 640px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.acciones-recibo {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.btn-imprimir {
+    background-color: #e65100;
+    color: #ffffff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-imprimir:hover {
+    background-color: #f9a825;
+    color: #111;
+}
+
+.btn-volver-recibo {
+    background-color: #21262d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-volver-recibo:hover {
+    border-color: #f9a825;
+    color: #f9a825;
+}
+
+/* Documento del recibo */
+.recibo {
+    background: #ffffff;
+    color: #111111;
+    border-radius: 10px;
+    padding: 30px 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.recibo-encabezado {
+    text-align: center;
+    border-bottom: 2px solid #e65100;
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+}
+
+.recibo-encabezado img {
+    width: 90px;
+    margin-bottom: 8px;
+}
+
+.recibo-encabezado h2 {
+    color: #e65100;
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin: 4px 0;
+}
+
+.recibo-encabezado p {
+    color: #555;
+    font-size: 13px;
+}
+
+.recibo-datos {
+    margin-bottom: 20px;
+}
+
+.fila-recibo {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+}
+
+.fila-recibo span {
+    color: #666;
+}
+
+.fila-recibo strong {
+    color: #111;
+    text-align: right;
+}
+
+.recibo-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f6f6f6;
+    border: 1px solid #e65100;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+}
+
+.recibo-total span {
+    color: #333;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.recibo-total strong {
+    color: #e65100;
+    font-size: 20px;
+}
+
+.recibo-codigo {
+    margin-bottom: 18px;
+}
+
+.recibo-codigo span {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.recibo-codigo code {
+    display: block;
+    background-color: #f6f6f6;
+    border: 1px dashed #aaa;
+    border-radius: 4px;
+    padding: 10px 12px;
+    color: #111;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    word-break: break-all;
+}
+
+.recibo-nota {
+    color: #777;
+    font-size: 12px;
+    text-align: center;
+    margin: 0;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+
+    body {
+        background: #ffffff;
+    }
+
+    .contenedor-recibo {
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .recibo {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 10px;
+    }
+}

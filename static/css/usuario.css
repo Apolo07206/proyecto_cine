@@ -59,8 +59,14 @@
 
 .acciones-usuario {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
+}
+
+@media (max-width: 768px) {
+    .acciones-usuario {
+        grid-template-columns: 1fr;
+    }
 }
 
 .accion-card {

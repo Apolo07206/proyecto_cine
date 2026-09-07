@@ -11,6 +11,12 @@
     <div class="tarjeta-boletas">
         <h2>🎟️ Resumen de Boletas Seleccionadas</h2>
 
+        {% if funcion %}
+        <p class="info-funcion-boletas">
+            {{ funcion.titulo }} · Sala {{ sala.nombre }} · {{ funcion.fecha }} {{ funcion.hora_inicio }}
+        </p>
+        {% endif %}
+
         {% if asientos %}
         <div class="tabla-contenedor">
             <table class="tabla-asientos">
@@ -41,8 +47,14 @@
         <form action="{{ url_for('resumen_pago') }}" method="GET" class="acciones-pago">
             <input type="hidden" name="asientos" value="{{ asientos_raw }}">
             <input type="hidden" name="total" value="{{ total }}">
+            <input type="hidden" name="id_funcion" value="{{ id_funcion }}">
             <button type="submit" class="btn-comprar">Proceder al Pago 💳</button>
         </form>
+
+        <div class="acciones-cancelar">
+            <a href="{{ url_for('mapa_silla', id_funcion=id_funcion) }}" class="btn-volver">⬅ Volver para cambiar asientos</a>
+            <a href="{{ url_for('usuario_panel') }}" class="btn-cancelar-compra">🗑️ Cancelar compra</a>
+        </div>
         {% else %}
         <div class="sin-asientos">
             <p>No has seleccionado ningún asiento.</p>

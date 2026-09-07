@@ -1,5 +1,25 @@
 /* static/css/salas.css */
 
+/* Mensajes flash */
+.alert {
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.alert-success {
+    background-color: rgba(46, 204, 113, 0.25);
+    border: 1px solid #2ecc71;
+}
+
+.alert-error {
+    background-color: rgba(176, 0, 32, 0.35);
+    border: 1px solid #b00020;
+}
+
 /* Layout general del módulo de salas */
 .admin-container {
     max-width: 1200px;

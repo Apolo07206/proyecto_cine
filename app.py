@@ -1,4 +1,5 @@
 import os
+import secrets
 from flask import Flask, render_template, request, url_for, flash, redirect, session
 from flask_mysqldb import MySQL
 from config import Config
@@ -125,36 +126,161 @@ def usuario_panel():
     return render_template('usuario.html', usuario=usuario)
 
 
+@app.route('/mis-boletas')
+@login_required
+def mis_boletas():
+    boletas = models.obtener_boletas_por_usuario(mysql, session['user_id'])
+    return render_template('mis_boletas.html', boletas=boletas)
+
+
+@app.route('/mis-boletas/cancelar/<int:id_boleta>', methods=['POST'])
+@login_required
+def cancelar_mi_boleta(id_boleta):
+    boleta = models.obtener_boleta_detalle(mysql, id_boleta)
+    if not boleta:
+        flash('La boleta no existe.', 'error')
+        return redirect(url_for('mis_boletas'))
+    if boleta['id_usuario'] != session['user_id']:
+        flash('No puedes cancelar una boleta ajena.', 'error')
+        return redirect(url_for('mis_boletas'))
+    if boleta['estado'] != 'pagada':
+        flash('Esta boleta ya no está activa.', 'error')
+        return redirect(url_for('mis_boletas'))
+    models.cancelar_boleta(mysql, id_boleta)
+    flash('Boleta cancelada. La silla quedó disponible y tu asiento fue liberado.', 'success')
+    return redirect(url_for('mis_boletas'))
+
+
+@app.route('/cancelar-compra', methods=['POST'])
+@login_required
+def cancelar_compra():
+    id_funcion = request.form.get('id_funcion', type=int)
+    asientos_raw = request.form.get('asientos', '')
+
+    if not id_funcion or not asientos_raw:
+        flash('No hay información de la compra a cancelar.', 'error')
+        return redirect(url_for('mis_boletas'))
+
+    funcion = models.obtener_funcion_por_id(mysql, id_funcion)
+    if not funcion:
+        flash('La función ya no existe.', 'error')
+        return redirect(url_for('mis_boletas'))
+
+    sala = models.obtener_sala_por_id(mysql, funcion['id_sala'])
+    sillas = models.obtener_sillas_por_sala(mysql, sala['id_sala'])
+    por_codigo = {f"{s['fila']}{s['columna']}": s for s in sillas}
+
+    sillas_ids = []
+    for codigo in [c.strip() for c in asientos_raw.split(',') if c.strip()]:
+        silla = por_codigo.get(codigo)
+        if silla:
+            sillas_ids.append(silla['id_silla'])
+
+    if not sillas_ids:
+        flash('No se encontraron asientos válidos para cancelar.', 'error')
+        return redirect(url_for('mis_boletas'))
+
+    canceladas = models.cancelar_boletas_usuario(
+        mysql, id_funcion, sillas_ids, session['user_id'])
+
+    if canceladas:
+        flash(f'Compra cancelada: {canceladas} boleto(s) anulado(s). '
+              'Las sillas quedaron disponibles.', 'success')
+    else:
+        flash('No se encontraron boletos tuyos activos para cancelar.', 'error')
+    return redirect(url_for('mis_boletas'))
+
+
+@app.route('/recibo/<int:id_boleta>')
+@login_required
+def recibo(id_boleta):
+    boleta = models.obtener_boleta_detalle(mysql, id_boleta)
+    if not boleta:
+        flash('La boleta no existe.', 'error')
+        return redirect(url_for('mis_boletas'))
+    if boleta['id_usuario'] != session['user_id']:
+        flash('No tienes permiso para ver este recibo.', 'error')
+        return redirect(url_for('mis_boletas'))
+    if boleta['estado'] == 'cancelada':
+        flash('Este boleto fue cancelado.', 'error')
+        return redirect(url_for('mis_boletas'))
+    return render_template('recibo.html', boleta=boleta, tipo_visual=tipo_visual)
+
+
+PRECIOS = {'vip': 25000, 'estandar': 15000, 'preferencial': 12000}
+
+def tipo_visual(tipo):
+    return 'estandar' if tipo == 'general' else tipo
+
+
 @app.route('/boletas')
 @login_required
 def seleccion_boletas():
     asientos_raw = request.args.get('asientos', '')
-    precios = {'vip': 25000, 'estandar': 15000, 'preferencial': 12000}
+    id_funcion = request.args.get('id_funcion', type=int)
+
+    if not asientos_raw or not id_funcion:
+        flash('Debes seleccionar una función y sus asientos.', 'error')
+        return redirect(url_for('mapa_silla'))
+
+    funcion = models.obtener_funcion_por_id(mysql, id_funcion)
+    if not funcion:
+        flash('La función seleccionada ya no está disponible.', 'error')
+        return redirect(url_for('mapa_silla'))
+
+    sala = models.obtener_sala_por_id(mysql, funcion['id_sala'])
+    sillas = models.obtener_sillas_por_sala(mysql, sala['id_sala'])
+    por_codigo = {f"{s['fila']}{s['columna']}": s for s in sillas}
+
     asientos = []
     total = 0
-    if asientos_raw:
-        for codigo in asientos_raw.split(','):
-            codigo = codigo.strip()
-            if not codigo:
-                continue
-            letra = codigo[0].upper()
-            if letra in ('J', 'I'):
-                tipo = 'vip'
-            elif letra in ('B', 'A'):
-                tipo = 'preferencial'
-            else:
-                tipo = 'estandar'
-            precio = precios[tipo]
-            asientos.append({'codigo': codigo, 'tipo': tipo, 'precio': precio})
-            total += precio
-    return render_template('seleccion_boletas.html',
-                           asientos=asientos, asientos_raw=asientos_raw, total=total)
+    for codigo in asientos_raw.split(','):
+        codigo = codigo.strip()
+        if not codigo or codigo not in por_codigo:
+            continue
+        tipo = tipo_visual(por_codigo[codigo]['tipo'])
+        precio = PRECIOS[tipo]
+        asientos.append({'codigo': codigo, 'tipo': tipo, 'precio': precio})
+        total += precio
+
+    return render_template('seleccion_boletas.html', asientos=asientos,
+                           asientos_raw=asientos_raw, total=total,
+                           id_funcion=id_funcion, funcion=funcion, sala=sala)
 
 
 @app.route('/mapa')
 @login_required
 def mapa_silla():
-    return render_template('mapa_silla.html')
+    funciones = models.obtener_funciones(mysql)
+    id_funcion = request.args.get('id_funcion', type=int)
+
+    filas = []
+    funcion = None
+    sala = None
+    if id_funcion:
+        funcion = models.obtener_funcion_por_id(mysql, id_funcion)
+        if not funcion:
+            flash('La función seleccionada no existe.', 'error')
+            return render_template('mapa_silla.html', funciones=funciones,
+                                   mapa_activo=False)
+        sala = models.obtener_sala_por_id(mysql, funcion['id_sala'])
+        sillas = models.obtener_sillas_por_sala(mysql, funcion['id_sala'])
+        ocupadas = {r['id_silla'] for r in
+                    models.obtener_sillas_ocupadas_por_funcion(mysql, id_funcion)}
+
+        fila_actual = None
+        for s in sillas:
+            if fila_actual is None or fila_actual['letra'] != s['fila']:
+                fila_actual = {'letra': s['fila'], 'sillas': []}
+                filas.append(fila_actual)
+            fila_actual['sillas'].append({
+                'codigo': f"{s['fila']}{s['columna']}",
+                'tipo': tipo_visual(s['tipo']),
+                'ocupado': s['id_silla'] in ocupadas,
+            })
+
+    return render_template('mapa_silla.html', funciones=funciones, funcion=funcion,
+                           sala=sala, filas=filas, mapa_activo=bool(id_funcion and funcion))
 
 
 @app.route('/pago')
@@ -162,13 +288,96 @@ def mapa_silla():
 def resumen_pago():
     asientos = request.args.get('asientos', '')
     total = request.args.get('total', '0')
-    return render_template('resumen_pago.html', asientos=asientos, total=total)
+    id_funcion = request.args.get('id_funcion', type=int)
+
+    if not asientos or not id_funcion:
+        flash('Compra incompleta. Vuelve a elegir tus asientos.', 'error')
+        return redirect(url_for('mapa_silla'))
+
+    return render_template('resumen_pago.html', asientos=asientos,
+                           total=total, id_funcion=id_funcion)
+
+
+@app.route('/procesar_pago', methods=['POST'])
+@login_required
+def procesar_pago():
+    asientos_raw = request.form.get('asientos', '')
+    id_funcion = request.form.get('id_funcion', type=int)
+
+    if not asientos_raw or not id_funcion:
+        flash('No hay asientos para comprar.', 'error')
+        return redirect(url_for('mapa_silla'))
+
+    funcion = models.obtener_funcion_por_id(mysql, id_funcion)
+    if not funcion:
+        flash('La función ya no está disponible.', 'error')
+        return redirect(url_for('mapa_silla'))
+
+    sala = models.obtener_sala_por_id(mysql, funcion['id_sala'])
+    sillas = models.obtener_sillas_por_sala(mysql, sala['id_sala'])
+    por_codigo = {f"{s['fila']}{s['columna']}": s for s in sillas}
+    ocupadas = {r['id_silla'] for r in
+                models.obtener_sillas_ocupadas_por_funcion(mysql, id_funcion)}
+
+    codigos = [c.strip() for c in asientos_raw.split(',') if c.strip()]
+    compradas = []
+    total = 0
+    for codigo in codigos:
+        silla = por_codigo.get(codigo)
+        if not silla:
+            continue
+        if silla['id_silla'] in ocupadas:
+            flash(f'El asiento {codigo} ya fue ocupado por otra persona.', 'error')
+            continue
+        precio = PRECIOS[tipo_visual(silla['tipo'])]
+        codigo_qr = f"CP-{id_funcion}-{silla['id_silla']}-{secrets.token_hex(4)}"
+        models.crear_boleta(mysql, id_funcion, session['user_id'],
+                            silla['id_silla'], 'general', precio, codigo_qr)
+        compradas.append(codigo)
+        total += precio
+
+    if not compradas:
+        flash('No se pudo confirmar la compra de ningún asiento.', 'error')
+        return redirect(url_for('mapa_silla', id_funcion=id_funcion))
+
+    return redirect(url_for('confirmacion', id_funcion=id_funcion,
+                            asientos=','.join(compradas)))
 
 
 @app.route('/confirmacion')
 @login_required
 def confirmacion():
-    return render_template('confirmacion.html')
+    id_funcion = request.args.get('id_funcion', type=int)
+    asientos_raw = request.args.get('asientos', '')
+
+    if not id_funcion or not asientos_raw:
+        flash('No hay información de la compra.', 'error')
+        return redirect(url_for('usuario_panel'))
+
+    funcion = models.obtener_funcion_por_id(mysql, id_funcion)
+    sala = models.obtener_sala_por_id(mysql, funcion['id_sala'])
+    sillas = models.obtener_sillas_por_sala(mysql, sala['id_sala'])
+    por_codigo = {f"{s['fila']}{s['columna']}": s for s in sillas}
+
+    detalles = []
+    total = 0
+    for codigo in [c.strip() for c in asientos_raw.split(',') if c.strip()]:
+        silla = por_codigo.get(codigo)
+        if not silla:
+            continue
+        tipo = tipo_visual(silla['tipo'])
+        precio = PRECIOS[tipo]
+        boleta = models.obtener_boleta_por_silla_funcion(mysql, id_funcion, silla['id_silla'])
+        detalles.append({
+            'codigo': codigo,
+            'tipo': tipo,
+            'precio': precio,
+            'codigo_qr': boleta['codigo_qr'] if boleta else '',
+        })
+        total += precio
+
+    return render_template('confirmacion.html', funcion=funcion, sala=sala,
+                           detalles=detalles, total=total)
 
 
 # --- MÓDULO ADMIN ---
@@ -305,16 +514,18 @@ def admin_reportes():
     resumen = models.obtener_resumen_ventas(mysql)
     funciones = models.obtener_funciones_para_reportes(mysql)
     id_funcion = request.args.get('id_funcion', type=int)
+    filtro = request.args.get('correo', '').strip()
 
     boletas = []
     totales_funcion = None
     if id_funcion:
-        boletas = models.obtener_boletas_con_detalles(mysql, id_funcion)
+        boletas = models.obtener_boletas_con_detalles(mysql, id_funcion,
+                                                      filtro or None)
         totales_funcion = models.obtener_totales_por_funcion(mysql, id_funcion)
 
     return render_template('admin/reportes.html', resumen=resumen, funciones=funciones,
                            id_funcion_seleccionada=id_funcion, boletas=boletas,
-                           totales_funcion=totales_funcion)
+                           totales_funcion=totales_funcion, filtro=filtro)
 
 
 if __name__ == '__main__':

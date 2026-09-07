@@ -1,0 +1,253 @@
+/* static/css/mis_boletas.css */
+
+.contenedor-mis-boletas {
+    max-width: 860px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.contenedor-mis-boletas > h2 {
+    color: #ffffff;
+    font-size: 26px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+/* Mensajes flash */
+.flash-mensaje {
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.flash-ok {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
+.flash-error {
+    background-color: rgba(176, 0, 32, 0.15);
+    color: #ff8080;
+    border: 1px solid #b00020;
+}
+
+.lista-boletas {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.bono-boleta {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-left: 4px solid #e65100;
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.bono-cancelada {
+    border-left-color: #6c757d;
+    opacity: 0.85;
+}
+
+.bono-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.bono-pelicula h3 {
+    color: #ffffff;
+    font-size: 18px;
+    margin: 6px 0 4px;
+}
+
+.bono-detalle {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.bono-asiento {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px dashed #30363d;
+    border-radius: 8px;
+    padding: 8px 14px;
+    min-width: 72px;
+}
+
+.silla-big {
+    color: #f9a825;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tipo-silla {
+    color: #8b949e;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.estado-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.estado-pagada {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
+.estado-cancelada {
+    background-color: rgba(176, 0, 32, 0.2);
+    color: #ff8080;
+    border: 1px solid #b00020;
+}
+
+.estado-usada {
+    background-color: rgba(108, 117, 125, 0.2);
+    color: #9ca3af;
+    border: 1px solid #6c757d;
+}
+
+.bono-cuerpo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    background-color: #0d1117;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+}
+
+.bono-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.bono-item span {
+    color: #8b949e;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.bono-item strong {
+    color: #f5f5f5;
+    font-size: 14px;
+}
+
+.bono-item.qr code {
+    color: #64b5f6;
+    background-color: #161b22;
+    border: 1px dashed #30363d;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 12px;
+    word-break: break-all;
+}
+
+.bono-acciones {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-accion {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-recibo {
+    background-color: #e65100;
+    color: #ffffff;
+}
+
+.btn-recibo:hover {
+    background-color: #f9a825;
+    color: #111;
+}
+
+.btn-cancelar {
+    background-color: transparent;
+    color: #ff8080;
+    border: 1px solid #b00020;
+}
+
+.btn-cancelar:hover {
+    background-color: rgba(176, 0, 32, 0.2);
+}
+
+.nota-cancelada {
+    color: #8b949e;
+    font-size: 14px;
+    margin: 0;
+}
+
+.sin-boletas {
+    text-align: center;
+    background-color: #161b22;
+    border: 1px dashed #30363d;
+    border-radius: 10px;
+    padding: 50px 20px;
+}
+
+.sin-boletas p {
+    color: #9ca3af;
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+
+.btn-comprar-boleta {
+    display: inline-block;
+    background-color: #e65100;
+    color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-comprar-boleta:hover {
+    background-color: #f9a825;
+    color: #111;
+}
+
+.volver-usuario {
+    margin-top: 26px;
+    text-align: center;
+}
+
+.volver-usuario a {
+    color: #64b5f6;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.volver-usuario a:hover {
+    text-decoration: underline;
+}

@@ -102,9 +102,111 @@
     filter: brightness(1.2);
 }
 
+.asiento.ocupado {
+    background-color: #3a3f47;
+    color: #6b7280;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.asiento-demo.ocupado {
+    background-color: #3a3f47;
+}
+
 .vip { background-color: #2e7d32; }
 .estandar { background-color: #e65100; }
 .preferencial { background-color: #f9a825; color: #111; }
+
+/* Mensajes flash */
+.flash-mensaje {
+    width: 100%;
+    max-width: 640px;
+    margin: 18px auto 0;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.flash-ok {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
+.flash-error {
+    background-color: rgba(176, 0, 32, 0.15);
+    color: #ff8080;
+    border: 1px solid #b00020;
+}
+
+/* Selector de función */
+.seleccion-funcion {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 30px;
+    min-width: 320px;
+    max-width: 520px;
+}
+
+.seleccion-funcion h3 {
+    color: white;
+    font-size: 20px;
+}
+
+.seleccion-funcion form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+}
+
+.seleccion-funcion select {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: white;
+    padding: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+.sinfunciones {
+    color: #8b949e;
+}
+
+.enlace-volver {
+    color: #64b5f6;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.enlace-volver:hover {
+    text-decoration: underline;
+}
+
+/* Info de la función */
+.info-funcion {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    background-color: #031864;
+    border-radius: 8px;
+    padding: 12px 22px;
+    margin-bottom: 25px;
+    color: white;
+    font-size: 15px;
+}
+
+.info-funcion strong {
+    color: #f9a825;
+}
 
 .asiento.seleccionado {
     background-color: #1565c0 !important;

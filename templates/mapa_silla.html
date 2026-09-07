@@ -7,24 +7,71 @@
 {% endblock %}
 
 {% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, msg in messages %}
+            <p class="flash-mensaje {{ 'flash-error' if category == 'error' else 'flash-ok' }}">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 <main class="contenedor-sala">
     <h2 class="titulo-seccion-sala">Selección de Asientos</h2>
+
+    {% if not mapa_activo %}
+    <div class="seleccion-funcion">
+        <h3>Elige la función</h3>
+        {% if funciones %}
+        <form method="GET" action="{{ url_for('mapa_silla') }}">
+            <select name="id_funcion" required>
+                <option value="" disabled selected>-- Selecciona una función --</option>
+                {% for f in funciones %}
+                <option value="{{ f.id_funcion }}">{{ f.titulo }} · Sala {{ f.nombre_sala }} · {{ f.fecha }} {{ f.hora_inicio }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn-comprar">Ver mapa de sillas</button>
+        </form>
+        {% else %}
+        <p class="sin-funciones">No hay funciones programadas todavía. Vuelve más tarde.</p>
+        {% endif %}
+        <a href="{{ url_for('usuario_panel') }}" class="enlace-volver">⬅ Volver</a>
+    </div>
+    {% else %}
+
+    <div class="info-funcion">
+        <strong>{{ funcion.titulo }}</strong>
+        <span>Sala {{ sala.nombre }}</span>
+        <span>{{ funcion.fecha }} · {{ funcion.hora_inicio }}</span>
+    </div>
 
     <div class="leyenda">
         <div class="item-leyenda"><span class="asiento-demo vip"></span> VIP</div>
         <div class="item-leyenda"><span class="asiento-demo estandar"></span> Estándar</div>
         <div class="item-leyenda"><span class="asiento-demo preferencial"></span> Preferencial</div>
         <div class="item-leyenda"><span class="asiento-demo seleccionado"></span> Seleccionado</div>
+        <div class="item-leyenda"><span class="asiento-demo ocupado"></span> Ocupado</div>
     </div>
 
     <div class="pantalla">PANTALLA</div>
 
-    <div class="sala" id="sala"></div>
+    <div class="sala" id="sala">
+        {% for f in filas %}
+        <div class="fila">
+            <div class="letra-fila">{{ f.letra }}</div>
+            {% for s in f.sillas %}
+            <div class="asiento {{ s.tipo }} {{ 'ocupado' if s.ocupado }}"
+                 data-codigo="{{ s.codigo }}"
+                 {% if s.ocupado %}data-ocupado="1"{% endif %}>{{ s.codigo }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
     <div class="numeros-inferiores" id="numeros-inferiores"></div>
 
     <form action="{{ url_for('seleccion_boletas') }}" method="GET" id="form-asientos">
         <input type="hidden" name="asientos" id="input-asientos">
-        
+        <input type="hidden" name="id_funcion" value="{{ funcion.id_funcion }}">
+
         <div class="resumen">
             <div class="info-resumen">
                 <p>Asientos seleccionados: <strong id="lista-asientos">Ninguno</strong></p>
@@ -33,6 +80,7 @@
             <button type="submit" id="btn-boletas" class="btn-comprar" disabled>Seleccionar Boletas</button>
         </div>
     </form>
+    {% endif %}
 </main>
 {% endblock %}
 

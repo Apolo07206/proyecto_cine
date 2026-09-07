@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Boletas - Cine Premier{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/mis_boletas.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="contenedor-mis-boletas">
+    <h2>🎫 Mis Boletas</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, msg in messages %}
+                <p class="flash-mensaje {{ 'flash-error' if category == 'error' else 'flash-ok' }}">{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if boletas %}
+    <div class="lista-boletas">
+        {% for b in boletas %}
+        <div class="bono-boleta {{ 'bono-cancelada' if b.estado == 'cancelada' }}">
+            <div class="bono-cabecera">
+                <div class="bono-pelicula">
+                    <span class="estado-badge estado-{{ b.estado }}">{{ b.estado|upper }}</span>
+                    <h3>{{ b.pelicula }}</h3>
+                    <p class="bono-detalle">
+                        Sala {{ b.sala }} · {{ b.fecha }} {{ b.hora_inicio|replace(':00','') }} Hrs
+                    </p>
+                </div>
+                <div class="bono-asiento">
+                    <span class="silla-big">{{ b.silla }}</span>
+                    <span class="tipo-silla">{{ b.tipo_silla|capitalize }}</span>
+                </div>
+            </div>
+
+            <div class="bono-cuerpo">
+                <div class="bono-item">
+                    <span>Boleta</span>
+                    <strong>#{{ b.id_boleta }}</strong>
+                </div>
+                <div class="bono-item">
+                    <span>Fecha compra</span>
+                    <strong>{{ b.fecha_compra.strftime('%d/%m/%Y %H:%M') if b.fecha_compra else '' }}</strong>
+                </div>
+                <div class="bono-item">
+                    <span>Precio</span>
+                    <strong>${{ "{:,.0f}".format(b.precio) }} COP</strong>
+                </div>
+                <div class="bono-item qr">
+                    <span>Código</span>
+                    <code>{{ b.codigo_qr }}</code>
+                </div>
+            </div>
+
+            {% if b.estado == 'pagada' %}
+            <div class="bono-acciones">
+                <a href="{{ url_for('recibo', id_boleta=b.id_boleta) }}" class="btn-accion btn-recibo">🧾 Descargar Recibo</a>
+                <form action="{{ url_for('cancelar_mi_boleta', id_boleta=b.id_boleta) }}" method="POST"
+                      onsubmit="return confirm('¿Seguro que quieres cancelar este boleto? La silla {{ b.silla }} quedará disponible y no habrá reembolso.');">
+                    <button type="submit" class="btn-accion btn-cancelar">🗑️ Cancelar Boleto</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="bono-acciones">
+                <p class="nota-cancelada">Este boleto fue cancelado y la silla {{ b.silla }} quedó disponible.</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="sin-boletas">
+        <p>No has comprado ningún boleto todavía.</p>
+        <a href="{{ url_for('mapa_silla') }}" class="btn-comprar-boleta">🎟️ Comprar mi primera boleta</a>
+    </div>
+    {% endif %}
+
+    <div class="volver-usuario">
+        <a href="{{ url_for('usuario_panel') }}">⬅ Volver a Mi Cuenta</a>
+    </div>
+</main>
+{% endblock %}
