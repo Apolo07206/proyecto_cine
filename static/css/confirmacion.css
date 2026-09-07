@@ -1,0 +1,103 @@
+.contenedor-confirmacion {
+    padding: 40px 20px;
+    max-width: 550px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.tarjeta-confirmacion {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.icono-exito {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.tarjeta-confirmacion h2 {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.subtitulo {
+    color: #8b949e;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* Comprobante Digital */
+.comprobante-card {
+    background-color: #0d1117;
+    border: 1px dashed #e65100;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.header-comprobante {
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.header-comprobante h3 {
+    font-size: 16px;
+    color: #f9a825;
+}
+
+.cuerpo-comprobante {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fila-comprobante {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #c9d1d9;
+}
+
+.asientos-resaltados {
+    color: #f9a825;
+}
+
+.footer-comprobante {
+    margin-top: 15px;
+    border-top: 1px solid #30363d;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.footer-comprobante p {
+    font-size: 12px;
+    color: #8b949e;
+}
+
+.btn-inicio {
+    display: inline-block;
+    width: 100%;
+    background-color: #e65100;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-inicio:hover {
+    background-color: #f9a825;
+    color: #111;
+}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+<main class="contenedor-dashboard">
+    <div class="header-dashboard">
+        <h2>📊 Panel de Administración - Cine Premier</h2>
+        <p>Gestión de catálogo, salas y métricas del sistema.</p>
+    </div>
+
+    
+    <div class="grid-metricas">
+        <div class="tarjeta-metrica">
+            <span class="icono-metrica">🎬</span>
+            <div class="info-metrica">
+                <h4>Películas</h4>
+                <p class="numero">{{ total_peliculas if total_peliculas else 0 }}</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-metrica">
+            <span class="icono-metrica">🍿</span>
+            <div class="info-metrica">
+                <h4>En Cartelera</h4>
+                <p class="numero">{{ total_cartelera if total_cartelera else 0 }}</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-metrica">
+            <span class="icono-metrica">🎟️</span>
+            <div class="info-metrica">
+                <h4>Boletas Vendidas</h4>
+                <p class="numero">{{ total_ventas if total_ventas else 0 }}</p>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="grid-acciones">
+        <a href="{{ url_for('admin_peliculas') }}" class="tarjeta-accion">
+            <h3>🎥 Gestión de Películas</h3>
+            <p>Agregar, editar o eliminar películas de la cartelera.</p>
+        </a>
+
+        <a href="{{ url_for('admin_salas') }}" class="tarjeta-accion">
+            <h3>🏛️ Configuración de Salas</h3>
+            <p>Administrar capacidades y mapa de asientos.</p>
+        </a>
+
+        <a href="{{ url_for('admin_reportes') }}" class="tarjeta-accion">
+            <h3>📈 Reportes de Ventas</h3>
+            <p>Consultar ingresos y estadísticas de boletería.</p>
+        </a>
+    </div>
+</main>
+{% endblock %}

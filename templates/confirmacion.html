@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/confirmacion.css') }}">
+
+<main class="contenedor-confirmacion">
+    <div class="tarjeta-confirmacion">
+        <div class="icono-exito">🎉</div>
+        <h2>¡Reserva Confirmada!</h2>
+        <p class="subtitulo">Tu pago ha sido procesado con éxito. ¡Prepárate para disfrutar la función!</p>
+
+        <div class="comprobante-card">
+            <div class="header-comprobante">
+                <h3>🎟️ Ticket Virtual - Cine Premier</h3>
+            </div>
+            
+            <div class="cuerpo-comprobante">
+                <div class="fila-comprobante">
+                    <span>Cliente:</span>
+                    <strong>{{ cliente if cliente else 'Cliente Premier' }}</strong>
+                </div>
+                <div class="fila-comprobante">
+                    <span>Asientos Reservados:</span>
+                    <strong class="asientos-resaltados">{{ asientos }}</strong>
+                </div>
+                <div class="fila-comprobante">
+                    <span>Total Pagado:</span>
+                    <strong>${{ "{:,.0f}".format(total|float) }} COP</strong>
+                </div>
+            </div>
+
+            <div class="footer-comprobante">
+                <p>Muestra este comprobante digital o indícalo en portería al ingresar.</p>
+            </div>
+        </div>
+
+        <div class="acciones-confirmacion">
+            <a href="{{ url_for('home') }}" class="btn-inicio">🏠 Volver a Cartelera</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

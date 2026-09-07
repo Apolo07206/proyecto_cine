@@ -1,0 +1,137 @@
+.contenedor-funciones {
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.header-funciones {
+    text-align: left;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 15px;
+}
+
+.header-funciones h2 {
+    color: #ffffff;
+    font-size: 26px;
+}
+
+.header-funciones p {
+    color: #8b949e;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.grid-funciones-admin {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.card-formulario, .card-tabla {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 22px;
+    color: white;
+}
+
+.card-formulario h3, .card-tabla h3 {
+    font-size: 18px;
+    color: #f9a825;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.grupo-campo label {
+    font-size: 13px;
+    color: #8b949e;
+    margin-bottom: 6px;
+}
+
+.grupo-campo input, .grupo-campo select {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.grupo-campo input:focus, .grupo-campo select:focus {
+    border-color: #e65100;
+}
+
+.fila-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-guardar {
+    width: 100%;
+    background-color: #e65100;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-guardar:hover {
+    background-color: #f9a825;
+    color: #111;
+}
+
+/* Estilos de Tabla */
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+.tabla-funciones {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tabla-funciones th {
+    background-color: #031864;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.tabla-funciones td {
+    padding: 12px;
+    border-bottom: 1px solid #30363d;
+    color: #c9d1d9;
+    text-align: left;
+}
+
+.btn-eliminar {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sin-datos {
+    text-align: center !important;
+    color: #8b949e;
+    padding: 20px !important;
+}

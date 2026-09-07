@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/detalle_pelicula.css') }}">
+
+<main class="contenedor-detalle">
+    {% if pelicula %}
+    <div class="tarjeta-detalle">
+        <div class="poster-detalle">
+            <img src="{{ url_for('static', filename='img/posters/' + pelicula.poster_url) }}" alt="{{ pelicula.titulo }}">
+        </div>
+
+        <div class="info-detalle">
+            <h2>{{ pelicula.titulo }}</h2>
+
+            <div class="metadatos">
+                <span class="clasificacion clasificacion-{{ pelicula.clasificacion|lower }}">{{ pelicula.clasificacion }}</span>
+                <span class="duracion">⏱️ {{ pelicula.duracion_minutos }} min</span>
+                <span class="genero">🎭 {{ pelicula.genero }}</span>
+            </div>
+
+            <div class="sinopsis">
+                <h3>Sinopsis</h3>
+                <p>{{ pelicula.sinopsis if pelicula.sinopsis else 'Sin sinopsis disponible.' }}</p>
+            </div>
+
+            <div class="acciones-detalle">
+                <a href="{{ url_for('mapa_silla') }}" class="btn-asiento">🎟️ Asiento</a>
+                <a href="{{ url_for('home') }}" class="btn-volver">⬅ Volver a Cartelera</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="sin-pelicula">
+        <h2>Película no encontrada</h2>
+        <a href="{{ url_for('home') }}" class="btn-volver">⬅ Volver a Cartelera</a>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}
