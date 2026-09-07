@@ -103,6 +103,81 @@ def obtener_salas(mysql):
     cur.close()
     return salas
 
+def sala_existe(mysql, nombre):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT id_sala FROM sala WHERE nombre = %s", (nombre,))
+    existe = cur.fetchone() is not None
+    cur.close()
+    return existe
+
+def _letra_fila(indice, total_filas):
+    return chr(ord('A') + total_filas - 1 - indice)
+
+def _tipo_fila(indice, total_filas):
+    if indice < 2:
+        return 'vip'
+    if indice >= total_filas - 2:
+        return 'preferencial'
+    return 'general'
+
+def crear_sala_completa(mysql, nombre, filas, columnas):
+    capacidad = filas * columnas
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute(
+            "INSERT INTO sala (nombre, filas, columnas, capacidad_total) VALUES (%s, %s, %s, %s)",
+            (nombre, filas, columnas, capacidad)
+        )
+        id_sala = cur.lastrowid
+        for fila in range(filas):
+            letra = _letra_fila(fila, filas)
+            tipo = _tipo_fila(fila, filas)
+            for columna in range(1, columnas + 1):
+                cur.execute(
+                    "INSERT INTO silla (id_sala, fila, columna, tipo) VALUES (%s, %s, %s, %s)",
+                    (id_sala, letra, columna, tipo)
+                )
+        mysql.connection.commit()
+    except Exception:
+        mysql.connection.rollback()
+        raise
+    finally:
+        cur.close()
+    return id_sala
+
+def obtener_salas_con_total_sillas(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT s.id_sala, s.nombre, s.filas, s.columnas, s.capacidad_total,
+               COUNT(si.id_silla) AS total_sillas
+        FROM sala s
+        LEFT JOIN silla si ON si.id_sala = s.id_sala
+        GROUP BY s.id_sala, s.nombre, s.filas, s.columnas, s.capacidad_total
+        ORDER BY s.id_sala
+    """)
+    salas = cur.fetchall()
+    cur.close()
+    return salas
+
+def sala_tiene_funciones(mysql, id_sala):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT id_funcion FROM funcion WHERE id_sala = %s", (id_sala,))
+    tiene = cur.fetchone() is not None
+    cur.close()
+    return tiene
+
+def eliminar_sala_con_sillas(mysql, id_sala):
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("DELETE FROM silla WHERE id_sala = %s", (id_sala,))
+        cur.execute("DELETE FROM sala WHERE id_sala = %s", (id_sala,))
+        mysql.connection.commit()
+    except Exception:
+        mysql.connection.rollback()
+        raise
+    finally:
+        cur.close()
+
 # --- SILLA ---
 
 def crear_silla(mysql, id_sala, fila, columna, tipo='general'):
@@ -185,6 +260,20 @@ def obtener_funcion_por_id(mysql, id_funcion):
     cur.close()
     return funcion
 
+def obtener_funciones_para_reportes(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT f.id_funcion, p.titulo AS pelicula, s.nombre AS sala,
+               f.fecha, f.hora_inicio AS hora
+        FROM funcion f
+        JOIN pelicula p ON p.id_pelicula = f.id_pelicula
+        JOIN sala s ON s.id_sala = f.id_sala
+        ORDER BY f.fecha DESC, f.hora_inicio
+    """)
+    funciones = cur.fetchall()
+    cur.close()
+    return funciones
+
 
 # --- BOLETA ---
 
@@ -214,6 +303,45 @@ def obtener_boletas_por_funcion(mysql, id_funcion):
     """Para reportes (RF-10)."""
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM boleta WHERE id_funcion = %s", (id_funcion,))
+    boletas = cur.fetchall()
+    cur.close()
+    return boletas
+
+def obtener_resumen_ventas(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT COALESCE(SUM(CASE WHEN estado = 'pagada' THEN precio ELSE 0 END), 0) AS total_ingresos,
+               SUM(CASE WHEN estado = 'pagada' THEN 1 ELSE 0 END) AS total_pagadas,
+               SUM(CASE WHEN estado = 'cancelada' THEN 1 ELSE 0 END) AS total_canceladas
+        FROM boleta
+    """)
+    resumen = cur.fetchone()
+    cur.close()
+    return resumen
+
+def obtener_totales_por_funcion(mysql, id_funcion):
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT COUNT(*) AS cantidad, COALESCE(SUM(precio), 0) AS ingreso
+        FROM boleta
+        WHERE id_funcion = %s AND estado = 'pagada'
+    """, (id_funcion,))
+    totales = cur.fetchone()
+    cur.close()
+    return totales
+
+def obtener_boletas_con_detalles(mysql, id_funcion):
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT b.id_boleta, b.tipo_boleta, b.precio, b.fecha_compra, b.estado, b.codigo_qr,
+               COALESCE(u.nombre, 'Invitado') AS usuario,
+               CONCAT(s.fila, s.columna) AS silla
+        FROM boleta b
+        JOIN silla s ON s.id_silla = b.id_silla
+        LEFT JOIN usuario u ON u.id_usuario = b.id_usuario
+        WHERE b.id_funcion = %s
+        ORDER BY b.fecha_compra DESC
+    """, (id_funcion,))
     boletas = cur.fetchall()
     cur.close()
     return boletas

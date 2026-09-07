@@ -6,6 +6,10 @@
     margin: 0 auto;
     padding: 2rem 1rem;
 }
+.admin-container h2{
+    font-size: 25px ;
+    color: #ffffff;
+}
 
 /* Tarjetas contenedoras de secciones */
 .card-section {
@@ -34,6 +38,7 @@
 .form-group {
     display: flex;
     flex-direction: column;
+    color: #ffffff;
 }
 
 .form-group label {
@@ -90,8 +95,13 @@
     background-color: rgba(255, 255, 255, 0.02);
 }
 
+.data-table tbody td {
+    color: #ffffff;
+}
+
 .text-center {
     text-align: center;
+    color: #ffffff;
 }
 
 /* Badges e indicadores */

@@ -241,10 +241,32 @@ def guardar_pelicula(id_pelicula):
     return redirect(url_for('admin_peliculas'))
 
 
-@app.route('/admin/salas')
+@app.route('/admin/salas', methods=['GET', 'POST'])
 @role_required('admin')
 def admin_salas():
-    return render_template('admin/salas.html')
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        filas = int(request.form['filas'])
+        columnas = int(request.form['columnas'])
+        if models.sala_existe(mysql, nombre):
+            flash('Ya existe una sala con ese nombre.', 'error')
+        else:
+            models.crear_sala_completa(mysql, nombre, filas, columnas)
+            flash('Sala creada y sillas generadas correctamente.', 'success')
+        return redirect(url_for('admin_salas'))
+    salas = models.obtener_salas_con_total_sillas(mysql)
+    return render_template('admin/salas.html', salas=salas)
+
+
+@app.route('/admin/salas/eliminar/<int:id_sala>', methods=['POST'])
+@role_required('admin')
+def admin_eliminar_sala(id_sala):
+    if models.sala_tiene_funciones(mysql, id_sala):
+        flash('No se puede eliminar la sala: tiene funciones programadas.', 'error')
+    else:
+        models.eliminar_sala_con_sillas(mysql, id_sala)
+        flash('Sala eliminada correctamente.', 'success')
+    return redirect(url_for('admin_salas'))
 
 
 @app.route('/admin/funciones', methods=['GET', 'POST'])
@@ -280,7 +302,19 @@ def eliminar_funcion(id_funcion):
 @app.route('/admin/reportes')
 @role_required('admin')
 def admin_reportes():
-    return render_template('admin/reportes.html')
+    resumen = models.obtener_resumen_ventas(mysql)
+    funciones = models.obtener_funciones_para_reportes(mysql)
+    id_funcion = request.args.get('id_funcion', type=int)
+
+    boletas = []
+    totales_funcion = None
+    if id_funcion:
+        boletas = models.obtener_boletas_con_detalles(mysql, id_funcion)
+        totales_funcion = models.obtener_totales_por_funcion(mysql, id_funcion)
+
+    return render_template('admin/reportes.html', resumen=resumen, funciones=funciones,
+                           id_funcion_seleccionada=id_funcion, boletas=boletas,
+                           totales_funcion=totales_funcion)
 
 
 if __name__ == '__main__':
