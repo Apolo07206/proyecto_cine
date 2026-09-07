@@ -1,0 +1,231 @@
+/* static/css/reportes.css */
+
+/* Layout contenedor principal admin */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.page-header {
+    margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+    color: #f5f5f5;
+    font-size: 1.75rem;
+}
+
+/* Tarjetas resumen (KPIs) */
+.kpi-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.kpi-card.highlight {
+    border-color: #f2c94c;
+}
+
+.kpi-title {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.kpi-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #f5f5f5;
+}
+
+.kpi-card.highlight .kpi-value {
+    color: #f2c94c;
+}
+
+/* Tarjetas contenedoras de formularios y tablas */
+.card-section {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card-section h3 {
+    margin-bottom: 1.25rem;
+    color: #f5f5f5;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* Banner de resumen para la función seleccionada */
+.summary-banner {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-left: 4px solid #e50914;
+    border-radius: 4px;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    gap: 2rem;
+    color: #f5f5f5;
+    font-size: 0.95rem;
+}
+
+/* Formularios */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.4rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-control {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    color: #f5f5f5;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #e50914;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Tabla de reporte */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #30363d;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #0d1117;
+    color: #9ca3af;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.data-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.seat-tag {
+    background-color: #30363d;
+    color: #f5f5f5;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.qr-code-text {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+/* Insignias de Estado */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-pagada {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
+.status-cancelada {
+    background-color: rgba(176, 0, 32, 0.2);
+    color: #ff8080;
+    border: 1px solid #b00020;
+}
+
+.status-usada {
+    background-color: rgba(108, 117, 125, 0.2);
+    color: #9ca3af;
+    border: 1px solid #6c757d;
+}
+
+/* Botones y Footer */
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid #30363d;
+    color: #f5f5f5;
+}
+
+.btn-secondary:hover {
+    background-color: #30363d;
+    color: #ffffff;
+}
+
+.actions-footer {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+}

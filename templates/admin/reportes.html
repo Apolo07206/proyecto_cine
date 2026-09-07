@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reportes.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="page-header">
+        <h2>Reportes y Registros de Ventas</h2>
+    </div>
+
+    <!-- Mensajes Flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Tarjetas de Resumen General (KPIs) -->
+    <div class="kpi-container">
+        <div class="kpi-card highlight">
+            <div class="kpi-title">Total Ingresos General</div>
+            <div class="kpi-value">${{ "%.2f"|format(resumen.total_ingresos) }}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Boletas Vendidas (Pagadas)</div>
+            <div class="kpi-value">{{ resumen.total_pagadas }}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Boletas Canceladas</div>
+            <div class="kpi-value">{{ resumen.total_canceladas }}</div>
+        </div>
+    </div>
+
+    <!-- Filtro por Función -->
+    <div class="card-section">
+        <h3>Filtrar Boletas por Función</h3>
+        <form method="GET" action="{{ url_for('admin_reportes') }}" class="form-grid">
+            <div class="form-group full-width">
+                <label for="id_funcion">Seleccione una Función Programada:</label>
+                <select name="id_funcion" id="id_funcion" class="form-control" onchange="this.form.submit()">
+                    <option value="">-- Seleccionar Función --</option>
+                    {% for funcion in funciones %}
+                    <option value="{{ funcion.id_funcion }}" {% if id_funcion_seleccionada == funcion.id_funcion %}selected{% endif %}>
+                        #{{ funcion.id_funcion }} - {{ funcion.pelicula }} | {{ funcion.sala }} | {{ funcion.fecha }} - {{ funcion.hora }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <!-- Detalle de Boletas de la Función Seleccionada -->
+    {% if id_funcion_seleccionada %}
+    <div class="card-section">
+        <h3>Detalle de Boletas - Función #{{ id_funcion_seleccionada }}</h3>
+        
+        <div class="summary-banner">
+            <span><strong>Boletas Pagadas:</strong> {{ totales_funcion.cantidad }}</span>
+            <span><strong>Ingresos de esta función:</strong> ${{ "%.2f"|format(totales_funcion.ingreso) }}</span>
+        </div>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th># Boleta</th>
+                    <th>Usuario</th>
+                    <th>Silla</th>
+                    <th>Tipo Boleta</th>
+                    <th>Precio</th>
+                    <th>Fecha Compra</th>
+                    <th>Estado</th>
+                    <th>Código QR</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for boleta in boletas %}
+                <tr>
+                    <td>#{{ boleta.id_boleta }}</td>
+                    <td>{{ boleta.usuario }}</td>
+                    <td><span class="seat-tag">{{ boleta.silla }}</span></td>
+                    <td>{{ boleta.tipo_boleta|capitalize }}</td>
+                    <td>${{ "%.2f"|format(boleta.precio) }}</td>
+                    <td>{{ boleta.fecha_compra }}</td>
+                    <td>
+                        <span class="status-badge status-{{ boleta.estado }}">
+                            {{ boleta.estado|upper }}
+                        </span>
+                    </td>
+                    <td><code class="qr-code-text">{{ boleta.codigo_qr }}</code></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">No se encontraron boletas registradas para esta función.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <div class="actions-footer">
+        <a href="{{ url_for('admin_dashboard') if 'admin_dashboard' in config else '/admin' }}" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+{% endblock %}
