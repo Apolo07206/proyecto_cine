@@ -167,8 +167,13 @@ def obtener_salas_con_total_sillas(mysql):
     return salas
 
 def sala_tiene_funciones(mysql, id_sala):
+    """Bloquea el borrado de la sala solo si tiene funciones con boletas pagadas."""
     cur = mysql.connection.cursor()
-    cur.execute("SELECT id_funcion FROM funcion WHERE id_sala = %s", (id_sala,))
+    cur.execute("""
+        SELECT f.id_funcion FROM funcion f
+        JOIN boleta b ON b.id_funcion = f.id_funcion
+        WHERE f.id_sala = %s AND b.estado = 'pagada'
+    """, (id_sala,))
     tiene = cur.fetchone() is not None
     cur.close()
     return tiene
@@ -237,11 +242,20 @@ def obtener_funciones(mysql):
     return funciones
 
 def eliminar_funcion(mysql, id_funcion):
+    """Solo elimina la función si NO tiene boletas pagadas asociadas."""
     cur = mysql.connection.cursor()
     try:
-        cur.execute("DELETE FROM funcion WHERE id_funcion = %s", (id_funcion,))
+        cur.execute("""
+            DELETE FROM funcion
+            WHERE id_funcion = %s
+              AND NOT EXISTS (
+                  SELECT 1 FROM boleta
+                  WHERE boleta.id_funcion = funcion.id_funcion
+                    AND boleta.estado = 'pagada'
+              )
+        """, (id_funcion,))
         mysql.connection.commit()
-        exito = True
+        exito = cur.rowcount > 0
     except Exception:
         mysql.connection.rollback()
         exito = False
