@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <!-- Datos de Pago Virtual aqui iba mi codigo de carpeta personal, cambialo ferney y pon el tuyo -->
+        <!-- Datos de pago virtual: estos campos son validados en el backend antes de procesar la compra. -->
         <form action="{{ url_for('procesar_pago') }}" method="POST" class="form-pago">
             <input type="hidden" name="asientos" value="{{ asientos }}">
             <input type="hidden" name="total" value="{{ total }}">

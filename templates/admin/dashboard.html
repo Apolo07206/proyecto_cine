@@ -1,22 +1,32 @@
 {% extends 'base.html' %}
 
-<<<<<<< HEAD
-{% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% block title %}Panel de Administración - Cine Premier{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
 <main class="contenedor-dashboard">
     <div class="header-dashboard">
         <h2>📊 Panel de Administración - Cine Premier</h2>
         <p>Gestión de catálogo, salas y métricas del sistema.</p>
     </div>
 
-    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, msg in messages %}
+                <p class="flash-mensaje {{ 'flash-error' if category == 'error' else 'flash-ok' }}">{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="grid-metricas">
         <div class="tarjeta-metrica">
             <span class="icono-metrica">🎬</span>
             <div class="info-metrica">
                 <h4>Películas</h4>
-                <p class="numero">{{ total_peliculas if total_peliculas else 0 }}</p>
+                <p class="numero">{{ total_peliculas or 0 }}</p>
             </div>
         </div>
 
@@ -24,7 +34,7 @@
             <span class="icono-metrica">🍿</span>
             <div class="info-metrica">
                 <h4>En Cartelera</h4>
-                <p class="numero">{{ total_cartelera if total_cartelera else 0 }}</p>
+                <p class="numero">{{ total_cartelera or 0 }}</p>
             </div>
         </div>
 
@@ -32,12 +42,11 @@
             <span class="icono-metrica">🎟️</span>
             <div class="info-metrica">
                 <h4>Boletas Vendidas</h4>
-                <p class="numero">{{ total_ventas if total_ventas else 0 }}</p>
+                <p class="numero">{{ total_ventas or 0 }}</p>
             </div>
         </div>
     </div>
 
-    
     <div class="grid-acciones">
         <a href="{{ url_for('admin_peliculas') }}" class="tarjeta-accion">
             <h3>🎥 Gestión de Películas</h3>
@@ -49,6 +58,11 @@
             <p>Administrar capacidades y mapa de asientos.</p>
         </a>
 
+        <a href="{{ url_for('admin_funciones') }}" class="tarjeta-accion">
+            <h3>🕐 Programación de Funciones</h3>
+            <p>Asignar horarios, películas y salas.</p>
+        </a>
+
         <a href="{{ url_for('admin_reportes') }}" class="tarjeta-accion">
             <h3>📈 Reportes de Ventas</h3>
             <p>Consultar ingresos y estadísticas de boletería.</p>
@@ -56,39 +70,3 @@
     </div>
 </main>
 {% endblock %}
-=======
-{% block title %}Admin - Dashboard | Cine Premier{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-{% endblock %}
-
-{% block content %}
-<main class="contenedor-admin">
-    <h1 class="titulo-admin">Panel de Administración</h1>
-
-    <div class="grid-admin">
-        <a href="{{ url_for('admin_peliculas') }}" class="admin-card">
-            <span class="admin-icono">🎬</span>
-            <h3>Películas</h3>
-            <p>Crear, editar y eliminar películas</p>
-        </a>
-        <a href="{{ url_for('admin_salas') }}" class="admin-card">
-            <span class="admin-icono">🎭</span>
-            <h3>Salas</h3>
-            <p>Gestionar salas y capacidad</p>
-        </a>
-        <a href="{{ url_for('admin_funciones') }}" class="admin-card">
-            <span class="admin-icono">🕐</span>
-            <h3>Funciones</h3>
-            <p>Programar funciones por sala</p>
-        </a>
-        <a href="{{ url_for('admin_reportes') }}" class="admin-card">
-            <span class="admin-icono">📊</span>
-            <h3>Reportes</h3>
-            <p>Ver ventas e ingresos</p>
-        </a>
-    </div>
-</main>
-{% endblock %}
->>>>>>> f4e3b9cb4040d37aa154d5a2a88325257e911122

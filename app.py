@@ -1,5 +1,7 @@
 import os
+import re
 import secrets
+from datetime import date
 from flask import Flask, render_template, request, url_for, flash, redirect, session
 from flask_mysqldb import MySQL
 from config import Config
@@ -308,6 +310,42 @@ def procesar_pago():
         flash('No hay asientos para comprar.', 'error')
         return redirect(url_for('mapa_silla'))
 
+    nombre = request.form.get('nombre', '').strip()
+    email = request.form.get('email', '').strip()
+    tarjeta = re.sub(r'[\s\-]', '', request.form.get('tarjeta', ''))
+    expiracion = request.form.get('expiracion', '').strip()
+    cvv = request.form.get('cvv', '').strip()
+    total_form = request.form.get('total', '0')
+
+    errores = []
+    if not nombre:
+        errores.append('El nombre del titular es obligatorio.')
+    if not email:
+        errores.append('El correo electrónico es obligatorio.')
+    if not tarjeta.isdigit() or len(tarjeta) != 16:
+        errores.append('El número de tarjeta debe tener 16 dígitos.')
+    if not re.match(r'^\d{2}/\d{2}$', expiracion):
+        errores.append('La fecha de vencimiento debe tener el formato MM/AA.')
+    else:
+        try:
+            mes, anio = (int(p) for p in expiracion.split('/'))
+            if mes < 1 or mes > 12:
+                raise ValueError
+            fecha_actual = date.today().replace(day=1)
+            fecha_vencimiento = date(2000 + anio, mes, 1)
+            if fecha_vencimiento < fecha_actual:
+                errores.append('La tarjeta está vencida.')
+        except ValueError:
+            errores.append('La fecha de vencimiento no es válida.')
+    if not cvv.isdigit() or len(cvv) not in (3, 4):
+        errores.append('El CVV debe tener 3 o 4 dígitos.')
+
+    if errores:
+        for e in errores:
+            flash(e, 'error')
+        return redirect(url_for('resumen_pago', asientos=asientos_raw,
+                                total=total_form, id_funcion=id_funcion))
+
     funcion = models.obtener_funcion_por_id(mysql, id_funcion)
     if not funcion:
         flash('La función ya no está disponible.', 'error')
@@ -355,6 +393,9 @@ def confirmacion():
         return redirect(url_for('usuario_panel'))
 
     funcion = models.obtener_funcion_por_id(mysql, id_funcion)
+    if not funcion:
+        flash('La función seleccionada ya no está disponible.', 'error')
+        return redirect(url_for('usuario_panel'))
     sala = models.obtener_sala_por_id(mysql, funcion['id_sala'])
     sillas = models.obtener_sillas_por_sala(mysql, sala['id_sala'])
     por_codigo = {f"{s['fila']}{s['columna']}": s for s in sillas}
@@ -385,7 +426,11 @@ def confirmacion():
 @app.route('/admin')
 @role_required('admin')
 def admin_dashboard():
-    return render_template('admin/dashboard.html')
+    total_peliculas = models.obtener_total_peliculas(mysql)
+    total_cartelera = models.obtener_total_en_cartelera(mysql)
+    total_ventas = models.obtener_total_ventas(mysql)
+    return render_template('admin/dashboard.html', total_peliculas=total_peliculas,
+                           total_cartelera=total_cartelera, total_ventas=total_ventas)
 
 
 @app.route('/admin/peliculas', methods=['GET', 'POST'])

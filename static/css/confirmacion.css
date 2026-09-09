@@ -101,3 +101,58 @@
     background-color: #f9a825;
     color: #111;
 }
+
+/* Boletas individuales confirmadas */
+.boleta-confirmada {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.boleta-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.boleta-cabecera .badge-asiento {
+    background-color: #e65100;
+    color: #fff;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.boleta-cabecera .badge-tipo {
+    background-color: #30363d;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.boleta-precio {
+    margin-left: auto;
+    color: #f9a825;
+    font-size: 15px;
+}
+
+.boleta-qr {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    color: #8b949e;
+}
+
+.boleta-qr code {
+    word-break: break-all;
+    color: #f9a825;
+    font-size: 12px;
+}

@@ -1,61 +1,34 @@
 {% extends 'base.html' %}
 
-<<<<<<< HEAD
-{% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/confirmacion.css') }}">
-
-<main class="contenedor-confirmacion">
-    <div class="tarjeta-confirmacion">
-        <div class="icono-exito">🎉</div>
-        <h2>¡Reserva Confirmada!</h2>
-        <p class="subtitulo">Tu pago ha sido procesado con éxito. ¡Prepárate para disfrutar la función!</p>
-
-        <div class="comprobante-card">
-            <div class="header-comprobante">
-                <h3>🎟️ Ticket Virtual - Cine Premier</h3>
-            </div>
-            
-            <div class="cuerpo-comprobante">
-                <div class="fila-comprobante">
-                    <span>Cliente:</span>
-                    <strong>{{ cliente if cliente else 'Cliente Premier' }}</strong>
-                </div>
-                <div class="fila-comprobante">
-                    <span>Asientos Reservados:</span>
-                    <strong class="asientos-resaltados">{{ asientos }}</strong>
-                </div>
-                <div class="fila-comprobante">
-                    <span>Total Pagado:</span>
-                    <strong>${{ "{:,.0f}".format(total|float) }} COP</strong>
-                </div>
-            </div>
-
-            <div class="footer-comprobante">
-                <p>Muestra este comprobante digital o indícalo en portería al ingresar.</p>
-            </div>
-        </div>
-
-        <div class="acciones-confirmacion">
-            <a href="{{ url_for('home') }}" class="btn-inicio">🏠 Volver a Cartelera</a>
-=======
 {% block title %}Confirmación - Cine Premier{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/resumen_pago.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/seleccion_boletas.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/confirmacion.css') }}">
 {% endblock %}
 
 {% block content %}
-<main class="contenedor-pago">
-    <div class="tarjeta-pago">
+<main class="contenedor-confirmacion">
+    <div class="tarjeta-confirmacion">
+        <div class="icono-exito">🎉</div>
         <h2>✅ ¡Compra Confirmada!</h2>
-        <p class="sub-confirmacion">Tu compra fue registrada correctamente. Presenta el código de cada boleta en taquilla.</p>
+        <p class="subtitulo">Tu compra fue registrada correctamente. Presenta el código de cada boleta en taquilla.</p>
 
-        <div class="factura-resumen">
-            <h3>{{ funcion.titulo }}</h3>
-            <div class="fila-factura">
-                <span>Sala / Función:</span>
-                <strong>Sala {{ sala.nombre }} · {{ funcion.fecha }} {{ funcion.hora_inicio }}</strong>
+        <div class="comprobante-card">
+            <div class="header-comprobante">
+                <h3>🎟️ Ticket Virtual - Cine Premier</h3>
+            </div>
+
+            <div class="cuerpo-comprobante">
+                <div class="fila-comprobante">
+                    <span>Película:</span>
+                    <strong>{{ funcion.titulo }}</strong>
+                </div>
+                <div class="fila-comprobante">
+                    <span>Sala / Función:</span>
+                    <strong>Sala {{ sala.nombre }} · {{ funcion.fecha }} {{ funcion.hora_inicio }}</strong>
+                </div>
             </div>
         </div>
 
@@ -67,7 +40,7 @@
                 <strong class="boleta-precio">${{ "{:,.0f}".format(d.precio) }} COP</strong>
             </div>
             <div class="boleta-qr">
-                <span>Tu código QR:</span>
+                <span>Tu código de boleta:</span>
                 <code>{{ d.codigo_qr }}</code>
             </div>
         </div>
@@ -91,7 +64,6 @@
                 <input type="hidden" name="asientos" value="{{ detalles|map(attribute='codigo')|join(',') }}">
                 <button type="submit" class="btn-cancelar-compra">🗑️ Cancelar compra y liberar asientos</button>
             </form>
->>>>>>> f4e3b9cb4040d37aa154d5a2a88325257e911122
         </div>
     </div>
 </main>

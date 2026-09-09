@@ -27,11 +27,11 @@
         </div>
         <div class="kpi-card">
             <div class="kpi-title">Boletas Vendidas (Pagadas)</div>
-            <div class="kpi-value">{{ resumen.total_pagadas }}</div>
+            <div class="kpi-value">{{ resumen.total_pagadas or 0 }}</div>
         </div>
         <div class="kpi-card">
             <div class="kpi-title">Boletas Canceladas</div>
-            <div class="kpi-value">{{ resumen.total_canceladas }}</div>
+            <div class="kpi-value">{{ resumen.total_canceladas or 0 }}</div>
         </div>
     </div>
 

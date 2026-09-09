@@ -2,20 +2,9 @@
 
 {% block title %}Selección de Asientos - Cine Premier{% endblock %}
 
-<<<<<<< HEAD
-            <nav>
-                <ul class="login">
-                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
-                    <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
-                </ulM>
-            </nav>
-        </div>
-    </header>
-=======
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/mapa_silla.css') }}">
 {% endblock %}
->>>>>>> f4e3b9cb4040d37aa154d5a2a88325257e911122
 
 {% block content %}
 {% with messages = get_flashed_messages(with_categories=true) %}

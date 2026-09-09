@@ -1,101 +1,5 @@
 {% extends 'base.html' %}
 
-<<<<<<< HEAD
-{% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/funciones.css') }}">
-
-<main class="contenedor-funciones">
-    <div class="header-funciones">
-        <h2>🗓️ Programación de Funciones</h2>
-        <p>Asigna horarios, películas y salas para la cartelera de Cine Premier.</p>
-    </div>
-
-    <div class="grid-funciones-admin">
-        <div class="card-formulario">
-            <h3>➕ Nueva Función</h3>
-            <form action="{{ url_for('admin_funciones_guardar') }}" method="POST" class="form-funcion">
-                <div class="grupo-campo">
-                    <label for="id_pelicula">Película:</label>
-                    <select name="id_pelicula" id="id_pelicula" required>
-                        <option value="" disabled selected>Selecciona una película</option>
-                        {% for pelicula in peliculas %}
-                            <option value="{{ pelicula.id_pelicula }}">{{ pelicula.titulo }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="grupo-campo">
-                    <label for="id_sala">Sala:</label>
-                    <select name="id_sala" id="id_sala" required>
-                        <option value="" disabled selected>Selecciona una sala</option>
-                        {% for sala in salas %}
-                            <option value="{{ sala.id_sala }}">{{ sala.nombre_sala }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="fila-doble">
-                    <div class="grupo-campo">
-                        <label for="fecha">Fecha:</label>
-                        <input type="date" id="fecha" name="fecha" required>
-                    </div>
-                    <div class="grupo-campo">
-                        <label for="hora">Hora:</label>
-                        <input type="time" id="hora" name="hora" required>
-                    </div>
-                </div>
-
-                <div class="grupo-campo">
-                    <label for="precio_base">Precio Base (COP):</label>
-                    <input type="number" id="precio_base" name="precio_base" placeholder="10000" step="500" required>
-                </div>
-
-                <button type="submit" class="btn-guardar">Guardar Función</button>
-            </form>
-        </div>
-
-        
-        <div class="card-tabla">
-            <h3>📋 Funciones Programadas</h3>
-            <div class="tabla-contenedor">
-                <table class="tabla-funciones">
-                    <thead>
-                        <tr>
-                            <th>Película</th>
-                            <th>Sala</th>
-                            <th>Horario</th>
-                            <th>Precio</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if funciones %}
-                            {% for f in funciones %}
-                            <tr>
-                                <td><strong>{{ f.titulo_pelicula }}</strong></td>
-                                <td>{{ f.nombre_sala }}</td>
-                                <td>{{ f.fecha }} - {{ f.hora }}</td>
-                                <td>${{ "{:,.0f}".format(f.precio_base) }}</td>
-                                <td>
-                                    <form action="{{ url_for('admin_funciones_eliminar', id=f.id_funcion) }}" method="POST" onsubmit="return confirm('¿Eliminar esta función?');">
-                                        <button type="submit" class="btn-eliminar">🗑️</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="5" class="sin-datos">No hay funciones programadas.</td>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</main>
-{% endblock %}
-=======
 {% block title %}Gestión de Funciones - Cine Premier{% endblock %}
 
 {% block extra_css %}
@@ -122,7 +26,7 @@
             <div class="form-group">
                 <label for="pelicula">Película:</label>
                 <select name="pelicula" id="pelicula" required>
-                    <option value="">Seleccione una pelicula</option>
+                    <option value="">Seleccione una película</option>
                     {% for p in peliculas %}
                     <option value="{{p.id_pelicula}}">{{p.titulo}}</option>
                     {% endfor %}
@@ -161,7 +65,7 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Pelicula</th>
+                        <th>Película</th>
                         <th>Sala</th>
                         <th>Fecha</th>
                         <th>Hora</th>
@@ -197,4 +101,3 @@
     <a href="{{ url_for('admin_dashboard') }}" class="volver-dashboard">Volver al dashboard</a>
 </div>
 {% endblock %}
->>>>>>> f4e3b9cb4040d37aa154d5a2a88325257e911122

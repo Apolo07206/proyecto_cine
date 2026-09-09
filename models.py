@@ -27,6 +27,30 @@ def obtener_usuario_por_id(mysql, id_usuario):
     return usuario
 
 
+# --- ESTADÍSTICAS / DASHBOARD ---
+
+def obtener_total_peliculas(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT COUNT(*) AS total FROM pelicula")
+    total = cur.fetchone()['total']
+    cur.close()
+    return total
+
+def obtener_total_en_cartelera(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT COUNT(*) AS total FROM pelicula WHERE estado = 'cartelera'")
+    total = cur.fetchone()['total']
+    cur.close()
+    return total
+
+def obtener_total_ventas(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT COUNT(*) AS total FROM boleta WHERE estado = 'pagada'")
+    total = cur.fetchone()['total']
+    cur.close()
+    return total
+
+
 # --- PELICULA ---
 
 def crear_pelicula(mysql, titulo, genero, clasificacion, duracion_minutos, sinopsis, poster_url, estado='proxima'):

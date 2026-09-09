@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{{url_for('static', filename='img/logo.png')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/peliculas.css')}}">
-    <title>Admin - Peliculas</title>
+    <title>Admin - Películas</title>
 </head>
 <body>
-    <h1>Administrar Peliculas</h1>
+    <h1>Administrar Películas</h1>
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -20,19 +20,19 @@
 
     <div class="añadir-pelicula">
         <div class="card card-form">
-            <h2>Agregar pelicula</h2>
+            <h2>Agregar película</h2>
             <form action="/admin/peliculas" method="post" enctype="multipart/form-data">
-                <input type="text" name="titulo" placeholder="Titulo de la pelicula" required><br>
-                <input type="text" name="genero" placeholder="Genero" required><br>
-                <input type="text" name="clasificacion" placeholder="Clasificacion (A, B, B15, C)" required><br>
-                <input type="number" name="duracion_minutos" placeholder="Duracion en minutos" required><br>
+                <input type="text" name="titulo" placeholder="Título de la película" required><br>
+                <input type="text" name="genero" placeholder="Género" required><br>
+                <input type="text" name="clasificacion" placeholder="Clasificación (A, B, B15, C)" required><br>
+                <input type="number" name="duracion_minutos" placeholder="Duración en minutos" required><br>
                 <textarea name="sinopsis" placeholder="Sinopsis" rows="4" cols="50"></textarea><br>
                 <select name="estado">
-                    <option value="proxima">Proxima</option>
+                    <option value="proxima">Próxima</option>
                     <option value="cartelera">Cartelera</option>
                     <option value="finalizada">Finalizada</option>
                 </select><br>
-                <label>Poster:</label>
+                <label>Póster:</label>
                 <input type="file" name="poster_url" accept="image/*"><br><br>
                 <button type="submit">Guardar</button>
             </form>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="titulo">
-        <h2>Peliculas existentes</h2>
+        <h2>Películas existentes</h2>
     </div>
 
     {% if peliculas %}
@@ -49,12 +49,12 @@
             <table border="1" cellpadding="8">
                 <thead>
                     <tr>
-                        <th>Titulo</th>
-                        <th>Genero</th>
-                        <th>Clasificacion</th>
-                        <th>Duracion</th>
+                        <th>Título</th>
+                        <th>Género</th>
+                        <th>Clasificación</th>
+                        <th>Duración</th>
                         <th>Estado</th>
-                        <th>Poster</th>
+                        <th>Póster</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,11 +67,11 @@
                         <td>{{ p.estado }}</td>
                         <td>{{ p.poster_url }}</td>
                         <td class="actualizar">
-                            <a href="/admin/peliculas/editar/{{p.id_pelicula}}">actualizar</a>
+                            <a href="/admin/peliculas/editar/{{p.id_pelicula}}">Actualizar</a>
                         </td>
                         <td>
                             <form action="/admin/peliculas/eliminar/{{p.id_pelicula}}" method="POST" class="eliminar">
-                                <button type="submit">eliminar</button>
+                                <button type="submit">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -81,7 +81,7 @@
         </div>
     </div>
     {% else %}
-        <p style="text-align:center;">No hay peliculas registradas.</p>
+        <p style="text-align:center;">No hay películas registradas.</p>
     {% endif %}
 
     <br>

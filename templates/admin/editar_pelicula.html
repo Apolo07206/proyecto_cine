@@ -4,29 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{{url_for('static', filename='img/logo.png')}}">
-    <title>Admin - Editar Pelicula</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/peliculas.css')}}">
+    <title>Admin - Editar Película</title>
 </head>
 <body>
-    <h1>Editar Pelicula</h1>
+    <h1>Editar Película</h1>
 
     <h2>{{ pelicula.titulo }}</h2>
     <form action="/admin/peliculas/editar/{{pelicula.id_pelicula}}" method="post" enctype="multipart/form-data">
         <input type="text" name="titulo" value="{{ pelicula.titulo }}" required><br>
         <input type="text" name="genero" value="{{ pelicula.genero }}" required><br>
-        <input type="text" name="clasificacion" value="{{ pelicula.clasificacion }}" placeholder="Clasificacion (A, B, B15, C)" required><br>
-        <input type="number" name="duracion_minutos" value="{{ pelicula.duracion_minutos }}" placeholder="Duracion en minutos" required><br>
+        <input type="text" name="clasificacion" value="{{ pelicula.clasificacion }}" placeholder="Clasificación (A, B, B15, C)" required><br>
+        <input type="number" name="duracion_minutos" value="{{ pelicula.duracion_minutos }}" placeholder="Duración en minutos" required><br>
         <textarea name="sinopsis" placeholder="Sinopsis" rows="4" cols="50">{{ pelicula.sinopsis }}</textarea><br>
         <select name="estado">
-            <option value="proxima" {% if pelicula.estado == 'proxima' %}selected{% endif %}>Proxima</option>
+            <option value="proxima" {% if pelicula.estado == 'proxima' %}selected{% endif %}>Próxima</option>
             <option value="cartelera" {% if pelicula.estado == 'cartelera' %}selected{% endif %}>Cartelera</option>
             <option value="finalizada" {% if pelicula.estado == 'finalizada' %}selected{% endif %}>Finalizada</option>
         </select><br>
-        <label>Poster:</label>
+        <label>Póster:</label>
         <input type="file" name="poster_url" accept="image/*"><br><br>
         <button type="submit">Guardar cambios</button>
     </form>
 
     <br>
-    <a href="{{ url_for('admin_peliculas') }}">Volver a peliculas</a>
+    <a href="{{ url_for('admin_peliculas') }}">Volver a películas</a>
 </body>
 </html>
