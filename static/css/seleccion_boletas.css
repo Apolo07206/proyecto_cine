@@ -24,6 +24,16 @@
     padding-bottom: 12px;
 }
 
+.info-funcion-boletas {
+    color: #9ca3af;
+    font-size: 14px;
+    margin-bottom: 18px;
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 10px 14px;
+}
+
 .tabla-contenedor {
     margin-bottom: 20px;
     overflow-x: auto;
@@ -64,6 +74,7 @@
 }
 
 .badge-tipo.vip { background-color: #2e7d32; color: white; }
+.badge-tipo.estandar { background-color: #e65100; color: white; }
 .badge-tipo.estándar { background-color: #e65100; color: white; }
 .badge-tipo.preferencial { background-color: #f9a825; color: #111; }
 
@@ -125,4 +136,36 @@
 
 .btn-volver:hover {
     text-decoration: underline;
+}
+
+.acciones-cancelar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.acciones-cancelar .btn-volver {
+    margin-top: 0;
+}
+
+.btn-cancelar-compra {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: transparent;
+    color: #ff8080;
+    border: 1px solid #b00020;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-cancelar-compra:hover {
+    background-color: rgba(176, 0, 32, 0.2);
 }

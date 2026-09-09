@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+<<<<<<< HEAD
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 
@@ -55,3 +56,39 @@
     </div>
 </main>
 {% endblock %}
+=======
+{% block title %}Admin - Dashboard | Cine Premier{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="contenedor-admin">
+    <h1 class="titulo-admin">Panel de Administración</h1>
+
+    <div class="grid-admin">
+        <a href="{{ url_for('admin_peliculas') }}" class="admin-card">
+            <span class="admin-icono">🎬</span>
+            <h3>Películas</h3>
+            <p>Crear, editar y eliminar películas</p>
+        </a>
+        <a href="{{ url_for('admin_salas') }}" class="admin-card">
+            <span class="admin-icono">🎭</span>
+            <h3>Salas</h3>
+            <p>Gestionar salas y capacidad</p>
+        </a>
+        <a href="{{ url_for('admin_funciones') }}" class="admin-card">
+            <span class="admin-icono">🕐</span>
+            <h3>Funciones</h3>
+            <p>Programar funciones por sala</p>
+        </a>
+        <a href="{{ url_for('admin_reportes') }}" class="admin-card">
+            <span class="admin-icono">📊</span>
+            <h3>Reportes</h3>
+            <p>Ver ventas e ingresos</p>
+        </a>
+    </div>
+</main>
+{% endblock %}
+>>>>>>> f4e3b9cb4040d37aa154d5a2a88325257e911122

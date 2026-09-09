@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Mi Cuenta - Cine Premier{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="contenedor-usuario">
+    <div class="tarjeta-usuario">
+        <div class="avatar-grande">
+            <img src="{{url_for('static', filename='img/icono_de_usuario.png')}}" alt="Usuario">
+        </div>
+        <h2>{{ usuario.nombre }}</h2>
+        <p class="correo-usuario">{{ usuario.correo }}</p>
+        <span class="rol-badge rol-{{ usuario.rol }}">{{ usuario.rol|capitalize }}</span>
+    </div>
+
+    <div class="acciones-usuario">
+        <a href="{{ url_for('mapa_silla') }}" class="accion-card">
+            <span class="accion-icono">🎟️</span>
+            <h3>Comprar Boletas</h3>
+            <p>Selecciona tu función y aparta tu asiento</p>
+        </a>
+        <a href="{{ url_for('mis_boletas') }}" class="accion-card">
+            <span class="accion-icono">🎫</span>
+            <h3>Mis Boletas</h3>
+            <p>Consulta, descarga tu recibo o cancela tus boletos</p>
+        </a>
+        <a href="{{ url_for('home') }}" class="accion-card">
+            <span class="accion-icono">🎬</span>
+            <h3>Ver Cartelera</h3>
+            <p>Consulta las películas en función</p>
+        </a>
+    </div>
+</main>
+{% endblock %}

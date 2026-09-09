@@ -108,3 +108,124 @@
     background-color: #f9a825;
     color: #111;
 }
+
+.btn-volver-pago {
+    display: block;
+    width: 100%;
+    background-color: #21262d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 12px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-volver-pago:hover {
+    border-color: #f9a825;
+    color: #f9a825;
+}
+
+.acciones-abortar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.acciones-abortar .btn-volver-pago {
+    flex: 1;
+    margin-top: 0;
+}
+
+.btn-cancelar-compra {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    background-color: transparent;
+    color: #ff8080;
+    border: 1px solid #b00020;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-cancelar-compra:hover {
+    background-color: rgba(176, 0, 32, 0.2);
+}
+
+.acciones-confirmacion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.acciones-confirmacion .btn-confirmar-pago {
+    margin-top: 0;
+}
+
+.acciones-confirmacion form .btn-cancelar-compra {
+    width: 100%;
+    border: 1px solid #b00020;
+}
+
+/* Confirmación de compra */
+.sub-confirmacion {
+    color: #8b949e;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.boleta-confirmada {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 15px;
+}
+
+.boleta-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.boleta-precio {
+    color: #f5f5f5;
+    margin-left: auto;
+}
+
+.boleta-qr {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.boleta-qr span {
+    font-size: 12px;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.boleta-qr code {
+    background-color: #161b22;
+    border: 1px dashed #30363d;
+    border-radius: 4px;
+    padding: 8px 10px;
+    color: #64b5f6;
+    font-size: 13px;
+    word-break: break-all;
+}

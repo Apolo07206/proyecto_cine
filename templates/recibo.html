@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Recibo de Compra - Cine Premier{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/recibo.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="contenedor-recibo">
+    <div class="acciones-recibo no-print">
+        <button type="button" onclick="window.print()" class="btn-imprimir">🖨️ Descargar / Imprimir PDF</button>
+        <a href="{{ url_for('mis_boletas') }}" class="btn-volver-recibo">⬅ Volver a Mis Boletas</a>
+    </div>
+
+    <div class="recibo">
+        <div class="recibo-encabezado">
+            <img src="{{ url_for('static', filename='img/logo_cortado.png') }}" alt="Cine Premier">
+            <h2>RECIBO DE COMPRA</h2>
+            <p>N° de recibo: <strong>R-{{ boleta.id_boleta }}</strong></p>
+        </div>
+
+        <div class="recibo-datos">
+            <div class="fila-recibo">
+                <span>Comprador</span>
+                <strong>{{ boleta.nombre_usuario }}</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Correo</span>
+                <strong>{{ boleta.correo_usuario }}</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Película</span>
+                <strong>{{ boleta.pelicula }}</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Clasificación</span>
+                <strong>{{ boleta.clasificacion }}</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Sala</span>
+                <strong>{{ boleta.sala }}</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Función</span>
+                <strong>{{ boleta.fecha }} · {{ boleta.hora_inicio|replace(':00','') }} Hrs</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Asiento</span>
+                <strong>{{ boleta.silla }}</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Tipo de silla</span>
+                <strong>{{ boleta.tipo_silla|capitalize }}</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Tipo de boleta</span>
+                <strong>{{ boleta.tipo_boleta|capitalize }}</strong>
+            </div>
+            <div class="fila-recibo">
+                <span>Fecha de compra</span>
+                <strong>{{ boleta.fecha_compra.strftime('%d/%m/%Y %H:%M') if boleta.fecha_compra else '' }}</strong>
+            </div>
+        </div>
+
+        <div class="recibo-total">
+            <span>TOTAL PAGADO</span>
+            <strong>${{ "{:,.0f}".format(boleta.precio) }} COP</strong>
+        </div>
+
+        <div class="recibo-codigo">
+            <span>Código de boleta (presentar en taquilla)</span>
+            <code>{{ boleta.codigo_qr }}</code>
+        </div>
+
+        <p class="recibo-nota">Gracias por tu compra. Conserva este recibo y el código de boleta para reclamar tu asiento en taquilla.</p>
+    </div>
+</main>
+{% endblock %}

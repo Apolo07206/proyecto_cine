@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+<<<<<<< HEAD
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle_pelicula.css') }}">
 
@@ -38,3 +39,26 @@
     {% endif %}
 </main>
 {% endblock %}
+=======
+{% block title %}{{ pelicula.titulo }} - Cine Premier{% endblock %}
+
+{% block content %}
+<main class="contenedor-detalle">
+    <div class="tarjeta-detalle">
+        <div class="detalle-poster">
+            <img src="{{ url_for('static', filename='img/posters/' + pelicula.poster_url) }}" alt="{{ pelicula.titulo }}">
+        </div>
+        <div class="detalle-info">
+            <h2>{{ pelicula.titulo }}</h2>
+            <span class="clasificacion clasificacion-{{ pelicula.clasificacion|lower }}">{{ pelicula.clasificacion }}</span>
+            <p class="detalle-meta">
+                <span>{{ pelicula.genero }}</span> ·
+                <span>{{ pelicula.duracion_minutos }} min</span>
+            </p>
+            <h3>Sinopsis</h3>
+            <p class="detalle-sinopsis">{{ pelicula.sinopsis }}</p>
+        </div>
+    </div>
+</main>
+{% endblock %}
+>>>>>>> f4e3b9cb4040d37aa154d5a2a88325257e911122

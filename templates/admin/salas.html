@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/salas.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <h2>Gestión de Salas</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="card-section">
+        <h3>Crear Nueva Sala</h3>
+        <form action="{{ url_for('admin_salas') }}" method="POST" class="form-grid">
+            <div class="form-group">
+                <label for="nombre">Nombre de la Sala:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Ej: Sala 1 3D">
+            </div>
+            <div class="form-group">
+                <label for="filas">Número de Filas:</label>
+                <input type="number" id="filas" name="filas" min="1" class="form-control" required placeholder="Ej: 10">
+            </div>
+            <div class="form-group">
+                <label for="columnas">Número de Columnas:</label>
+                <input type="number" id="columnas" name="columnas" min="1" class="form-control" required placeholder="Ej: 12">
+            </div>
+            <div class="form-group full-width">
+                <button type="submit" class="btn btn-primary">Guardar Sala y Generar Sillas</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-section">
+        <h3>Salas Existentes</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Filas</th>
+                    <th>Columnas</th>
+                    <th>Capacidad Total</th>
+                    <th>Sillas Generadas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sala in salas %}
+                <tr>
+                    <td>{{ sala.id_sala }}</td>
+                    <td><strong>{{ sala.nombre }}</strong></td>
+                    <td>{{ sala.filas }}</td>
+                    <td>{{ sala.columnas }}</td>
+                    <td>{{ sala.capacidad_total }}</td>
+                    <td><span class="badge-type badge-info">{{ sala.total_sillas }}</span></td>
+                    <td>
+                        <form action="{{ url_for('admin_eliminar_sala', id_sala=sala.id_sala) }}" method="POST" onsubmit="return confirm('¿Está seguro de eliminar esta sala y todas sus sillas?');" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">No hay salas registradas actualmente.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="actions-footer">
+        <a href="{{ url_for('admin_dashboard') if 'admin_dashboard' in config else '/admin' }}" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+{% endblock %}

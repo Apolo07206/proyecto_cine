@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+<<<<<<< HEAD
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/confirmacion.css') }}">
 
@@ -36,6 +37,61 @@
 
         <div class="acciones-confirmacion">
             <a href="{{ url_for('home') }}" class="btn-inicio">🏠 Volver a Cartelera</a>
+=======
+{% block title %}Confirmación - Cine Premier{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resumen_pago.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/seleccion_boletas.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="contenedor-pago">
+    <div class="tarjeta-pago">
+        <h2>✅ ¡Compra Confirmada!</h2>
+        <p class="sub-confirmacion">Tu compra fue registrada correctamente. Presenta el código de cada boleta en taquilla.</p>
+
+        <div class="factura-resumen">
+            <h3>{{ funcion.titulo }}</h3>
+            <div class="fila-factura">
+                <span>Sala / Función:</span>
+                <strong>Sala {{ sala.nombre }} · {{ funcion.fecha }} {{ funcion.hora_inicio }}</strong>
+            </div>
+        </div>
+
+        {% for d in detalles %}
+        <div class="boleta-confirmada">
+            <div class="boleta-cabecera">
+                <span class="badge-asiento">{{ d.codigo }}</span>
+                <span class="badge-tipo {{ d.tipo }}">{{ d.tipo }}</span>
+                <strong class="boleta-precio">${{ "{:,.0f}".format(d.precio) }} COP</strong>
+            </div>
+            <div class="boleta-qr">
+                <span>Tu código QR:</span>
+                <code>{{ d.codigo_qr }}</code>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="fila-factura total">
+            <span>Total pagado:</span>
+            <strong>${{ "{:,.0f}".format(total) }} COP</strong>
+        </div>
+
+        <div class="acciones-confirmacion">
+            <a href="{{ url_for('mapa_silla') }}" class="btn-volver-pago">🎟️ Comprar otro boleto</a>
+            <a href="{{ url_for('usuario_panel') }}" class="btn-confirmar-pago">Volver a mi cuenta 🎬</a>
+        </div>
+
+        <div class="acciones-confirmacion">
+            <a href="{{ url_for('mis_boletas') }}" class="btn-volver-pago">🎫 Ver mis boletas</a>
+            <form action="{{ url_for('cancelar_compra') }}" method="POST"
+                  onsubmit="return confirm('¿Cancelar toda esta compra ({{ detalles|length }} boletos)? Las sillas quedarán disponibles.');">
+                <input type="hidden" name="id_funcion" value="{{ funcion.id_funcion }}">
+                <input type="hidden" name="asientos" value="{{ detalles|map(attribute='codigo')|join(',') }}">
+                <button type="submit" class="btn-cancelar-compra">🗑️ Cancelar compra y liberar asientos</button>
+            </form>
+>>>>>>> f4e3b9cb4040d37aa154d5a2a88325257e911122
         </div>
     </div>
 </main>

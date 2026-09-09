@@ -1,0 +1,194 @@
+/* static/css/salas.css */
+
+/* Mensajes flash */
+.alert {
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.alert-success {
+    background-color: rgba(46, 204, 113, 0.25);
+    border: 1px solid #2ecc71;
+}
+
+.alert-error {
+    background-color: rgba(176, 0, 32, 0.35);
+    border: 1px solid #b00020;
+}
+
+/* Layout general del módulo de salas */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+.admin-container h2{
+    font-size: 25px ;
+    color: #ffffff;
+}
+
+/* Tarjetas contenedoras de secciones */
+.card-section {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card-section h3 {
+    margin-bottom: 1.25rem;
+    color: #f5f5f5;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* Formularios en grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+}
+
+.form-group label {
+    margin-bottom: 0.4rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-control {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    color: #f5f5f5;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #e50914;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Tablas de datos */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #30363d;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #0d1117;
+    color: #9ca3af;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.data-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.data-table tbody td {
+    color: #ffffff;
+}
+
+.text-center {
+    text-align: center;
+    color: #ffffff;
+}
+
+/* Badges e indicadores */
+.badge-type {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.badge-info {
+    background-color: rgba(23, 162, 184, 0.2);
+    color: #17a2b8;
+    border: 1px solid #17a2b8;
+}
+
+/* Botones y acciones */
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #e50914;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #b80710;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid #30363d;
+    color: #f5f5f5;
+}
+
+.btn-secondary:hover {
+    background-color: #30363d;
+    color: #ffffff;
+}
+
+.btn-danger {
+    background-color: #b00020;
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #800017;
+}
+
+.btn-sm {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+.actions-footer {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+}

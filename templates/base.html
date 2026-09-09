@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    {% block extra_css %}{% endblock %}
+    <title>{% block title %}Cine Premier{% endblock %}</title>
+</head>
+<body>
+    {% block header %}
+    <header class="header-cabezado">
+        <div class="navegacion">
+            <div class="titulo-imagen">
+                <a href="{{ url_for('home') }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <img src="{{ url_for('static', filename='img/logo_cortado.png') }}" alt="Logo Cine Premier" width="80px">
+                    <h2>Cine Premier</h2>
+                </a>
+            </div>
+
+            <nav>
+                <ul>
+                    {% if session.get('user_id') %}
+                    <li>
+                        {% if session.get('rol') == 'admin' %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="usuario-bloque" title="{{ session['nombre'] }}">
+                        {% else %}
+                        <a href="{{ url_for('usuario_panel') }}" class="usuario-bloque" title="{{ session['nombre'] }}">
+                        {% endif %}
+                            <img src="{{ url_for('static', filename='img/icono_de_usuario.png') }}" alt="Usuario" class="usuario-icono">
+                            <span class="usuario-nombre">{{ session['nombre'] }}</span>
+                        </a>
+                    </li>
+                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <p>&copy; 2026 Cine Premier</p>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
