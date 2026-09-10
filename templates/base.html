@@ -19,7 +19,9 @@
                 </a>
             </div>
 
-            <nav>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+            <nav id="menu-navegacion">
                 <ul>
                     {% if session.get('user_id') %}
                     <li>
@@ -50,5 +52,17 @@
     </footer>
 
     {% block extra_js %}{% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('menu-toggle');
+            const nav = document.getElementById('menu-navegacion');
+            if (toggle && nav) {
+                toggle.addEventListener('click', function () {
+                    const abierto = nav.classList.toggle('abierto');
+                    toggle.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

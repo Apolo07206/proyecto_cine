@@ -109,6 +109,40 @@ form {
     color: #ffffff;
 }
 
+.flash-login {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    width: 90%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.flash-item {
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.flash-ok {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
+.flash-error {
+    background-color: rgba(176, 0, 32, 0.15);
+    color: #ff8080;
+    border: 1px solid #b00020;
+}
+
 .logo {
     position: relative;
     right: 34px;
@@ -124,4 +158,31 @@ form {
     opacity: 1;
     transform: translateY(0);    /* Sube a su posición original */
   }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 480px) {
+    .tarjeta-users {
+        width: 92%;
+        padding: 40px 22px;
+    }
+
+    .tarjeta-users h1 {
+        font-size: 1.6rem;
+        margin-bottom: 35px;
+    }
+
+    .campo {
+        margin: 10px;
+    }
+
+    .campo label {
+        font-size: 1rem;
+    }
+
+    .logo {
+        width: 220px !important;
+        right: 0;
+        margin-bottom: 10px;
+    }
 }

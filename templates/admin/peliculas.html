@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{url_for('static', filename='img/logo.png')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/peliculas.css')}}">
-    <title>Admin - Películas</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Admin - Películas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/peliculas.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-peliculas-container">
     <h1>Administrar Películas</h1>
 
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for msg in messages %}
-                <p style="color: green; text-align:center;">{{ msg }}</p>
+            {% for category, msg in messages %}
+                <div class="flash-mensaje {{ 'flash-error' if category == 'error' else 'flash-ok' }}">{{ msg }}</div>
             {% endfor %}
         {% endif %}
     {% endwith %}
@@ -46,38 +46,40 @@
     {% if peliculas %}
     <div class="tarjeta-pelicula">
         <div class="card card-tabla">
-            <table border="1" cellpadding="8">
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Género</th>
-                        <th>Clasificación</th>
-                        <th>Duración</th>
-                        <th>Estado</th>
-                        <th>Póster</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for p in peliculas %}
-                    <tr>
-                        <td>{{ p.titulo }}</td>
-                        <td>{{ p.genero }}</td>
-                        <td>{{ p.clasificacion }}</td>
-                        <td>{{ p.duracion_minutos }} min</td>
-                        <td>{{ p.estado }}</td>
-                        <td>{{ p.poster_url }}</td>
-                        <td class="actualizar">
-                            <a href="/admin/peliculas/editar/{{p.id_pelicula}}">Actualizar</a>
-                        </td>
-                        <td>
-                            <form action="/admin/peliculas/eliminar/{{p.id_pelicula}}" method="POST" class="eliminar">
-                                <button type="submit">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="tabla-responsive">
+                <table border="1" cellpadding="8">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Género</th>
+                            <th>Clasificación</th>
+                            <th>Duración</th>
+                            <th>Estado</th>
+                            <th>Póster</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in peliculas %}
+                        <tr>
+                            <td>{{ p.titulo }}</td>
+                            <td>{{ p.genero }}</td>
+                            <td>{{ p.clasificacion }}</td>
+                            <td>{{ p.duracion_minutos }} min</td>
+                            <td>{{ p.estado }}</td>
+                            <td>{{ p.poster_url }}</td>
+                            <td class="actualizar">
+                                <a href="/admin/peliculas/editar/{{p.id_pelicula}}">Actualizar</a>
+                            </td>
+                            <td>
+                                <form action="/admin/peliculas/eliminar/{{p.id_pelicula}}" method="POST" class="eliminar">
+                                    <button type="submit">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     {% else %}
@@ -86,7 +88,7 @@
 
     <br>
     <div class="volver">
-        <a href="{{ url_for('admin_dashboard') }}"class="volver-dashboard">Volver al dashboard</a>
-    </div>    
-</body>
-</html>
+        <a href="{{ url_for('admin_dashboard') }}" class="volver-dashboard">Volver al dashboard</a>
+    </div>
+</div>
+{% endblock %}

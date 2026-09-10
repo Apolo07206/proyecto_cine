@@ -8,15 +8,17 @@
     <title>Iniciar Sesión</title>
 </head>
 <body>
-{%with messages= get_flashed_messages() %}
+{%with messages= get_flashed_messages(with_categories=true) %}
 {%if messages%}
-{%for mensaje in messages %}
-<script>alert('{{mensaje}}');</script>
+<div class="flash-login">
+{%for category, mensaje in messages %}
+<div class="flash-item {{ 'flash-error' if category == 'error' else 'flash-ok' }}">{{ mensaje }}</div>
 {%endfor%}
+</div>
 {%endif%}
 {%endwith%}
 
-    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo" class="logo" width="530px">
+    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo" class="logo" style="width: min(530px, 80%);">
 
     <div class="tarjeta-users">
         <h1>Iniciar sesión</h1>

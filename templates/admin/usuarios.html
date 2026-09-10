@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Usuarios{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/salas.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <h2>Gestión de Usuarios</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="card-section">
+        <h3>Crear Nuevo Usuario</h3>
+        <form action="{{ url_for('admin_usuarios') }}" method="POST" class="form-grid">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Nombre completo">
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" name="correo" class="form-control" required placeholder="correo@ejemplo.com">
+            </div>
+            <div class="form-group">
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena" class="form-control" required placeholder="Contraseña segura">
+            </div>
+            <div class="form-group">
+                <label for="rol">Rol:</label>
+                <select id="rol" name="rol" class="form-control" required>
+                    <option value="taquillero">Taquillero</option>
+                    <option value="admin">Administrador</option>
+                    <option value="cliente">Cliente</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <button type="submit" class="btn btn-primary">Crear Usuario</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-section">
+        <h3>Usuarios Existentes</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Registro</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <td>{{ u.id_usuario }}</td>
+                    <td><strong>{{ u.nombre }}</strong></td>
+                    <td>{{ u.correo }}</td>
+                    <td><span class="badge-type {% if u.rol == 'admin' %}badge-danger{% elif u.rol == 'taquillero' %}badge-info{% else %}badge-success{% endif %}">{{ u.rol }}</span></td>
+                    <td>{{ u.fecha_registro }}</td>
+                    <td>
+                        {% if u.id_usuario != session.get('user_id') %}
+                        <form action="{{ url_for('admin_eliminar_usuario', id_usuario=u.id_usuario) }}" method="POST" onsubmit="return confirm('¿Está seguro de eliminar este usuario?');" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                        {% else %}
+                        <span style="color: #8b949e;">Tú</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay usuarios registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="actions-footer">
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+{% endblock %}

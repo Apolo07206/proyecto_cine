@@ -169,3 +169,25 @@
 .btn-cancelar-compra:hover {
     background-color: rgba(176, 0, 32, 0.2);
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 480px) {
+    .contenedor-boletas {
+        padding: 20px 12px;
+    }
+
+    .tarjeta-boletas {
+        padding: 20px 16px;
+    }
+
+    .acciones-cancelar {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .acciones-cancelar .btn-volver,
+    .acciones-cancelar .btn-cancelar-compra {
+        width: 100%;
+        justify-content: center;
+    }
+}

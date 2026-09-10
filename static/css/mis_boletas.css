@@ -251,3 +251,25 @@
 .volver-usuario a:hover {
     text-decoration: underline;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 480px) {
+    .contenedor-mis-boletas {
+        margin: 24px auto;
+        padding: 0 12px;
+    }
+
+    .bono-cabecera {
+        flex-direction: column;
+    }
+
+    .bono-asiento {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .bono-cuerpo {
+        grid-template-columns: 1fr 1fr;
+    }
+}

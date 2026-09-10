@@ -229,3 +229,28 @@
     font-size: 13px;
     word-break: break-all;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 480px) {
+    .contenedor-pago {
+        padding: 20px 12px;
+    }
+
+    .tarjeta-pago {
+        padding: 20px 16px;
+    }
+
+    .fila-doble {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .acciones-abortar {
+        flex-direction: column;
+    }
+
+    .acciones-abortar .btn-volver-pago,
+    .acciones-abortar .btn-cancelar-compra {
+        width: 100%;
+    }
+}

@@ -156,3 +156,32 @@
     color: #f9a825;
     font-size: 12px;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 480px) {
+    .contenedor-confirmacion {
+        padding: 20px 12px;
+    }
+
+    .tarjeta-confirmacion {
+        padding: 20px 16px;
+    }
+
+    .comprobante-card {
+        padding: 16px;
+    }
+
+    .fila-comprobante {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .boleta-cabecera {
+        flex-wrap: wrap;
+    }
+
+    .boleta-precio {
+        margin-left: 0;
+        width: 100%;
+    }
+}

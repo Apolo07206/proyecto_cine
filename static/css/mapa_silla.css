@@ -269,3 +269,103 @@
     cursor: not-allowed;
     opacity: 0.6;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .contenedor-sala {
+        padding: 20px 10px;
+    }
+
+    .pantalla {
+        width: 95%;
+    }
+
+    .seleccion-funcion {
+        min-width: 0;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .resumen {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .asiento {
+        width: 20px;
+        height: 20px;
+        font-size: 8px;
+        border-radius: 4px 4px 2px 2px;
+    }
+
+    .fila {
+        gap: 4px;
+    }
+
+    .bloque {
+        gap: 4px;
+    }
+
+    .letra-fila {
+        width: 18px;
+        margin-right: 4px;
+        font-size: 12px;
+    }
+
+    .espacio-lateral {
+        width: 40px;
+    }
+
+    .numero-columna {
+        width: 20px;
+        font-size: 10px;
+    }
+
+    .numeros-inferiores {
+        gap: 4px;
+        margin-left: 22px;
+        margin-top: 10px;
+    }
+
+    .item-leyenda {
+        font-size: 12px;
+    }
+
+    .asiento-demo {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .asiento {
+        width: 16px;
+        height: 16px;
+        font-size: 7px;
+    }
+
+    .fila {
+        gap: 3px;
+    }
+
+    .bloque {
+        gap: 3px;
+    }
+
+    .espacio-lateral {
+        width: 28px;
+    }
+
+    .numero-columna {
+        width: 16px;
+    }
+
+    .titulo-seccion-sala {
+        font-size: 20px;
+    }
+
+    .info-funcion {
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+}

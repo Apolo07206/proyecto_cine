@@ -253,3 +253,43 @@
     display: flex;
     justify-content: flex-start;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1.5rem 0.75rem;
+    }
+
+    .card-section {
+        padding: 1rem;
+    }
+
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .summary-banner {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .buscador-boletas {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .buscador-boletas .btn {
+        width: 100%;
+    }
+
+    .actions-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .actions-footer .btn {
+        text-align: center;
+    }
+}

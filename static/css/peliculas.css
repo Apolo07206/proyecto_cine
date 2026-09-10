@@ -3,8 +3,33 @@ body{
     color: #fff;
     font-family: Arial, sans-serif;
 }
+.admin-peliculas-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
 h1{
     text-align: center;
+}
+.tabla-responsive {
+    overflow-x: auto;
+}
+.flash-mensaje {
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.flash-ok {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+.flash-error {
+    background-color: rgba(176, 0, 32, 0.15);
+    color: #ff8080;
+    border: 1px solid #b00020;
 }
 table{
     color: #fff;
@@ -110,4 +135,38 @@ tr a{
     scale: calc(1.1);
     transform: translateY(-10px);
 
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .admin-peliculas-container {
+        padding: 1.5rem 0.75rem;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .card-form {
+        width: 100%;
+    }
+
+    .card-tabla {
+        max-width: 100%;
+    }
+
+    .tabla-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tabla-responsive table {
+        white-space: nowrap;
+    }
+
+    .volver-dashboard {
+        max-width: 100%;
+        text-align: center;
+        display: block;
+    }
 }

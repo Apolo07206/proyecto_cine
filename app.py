@@ -7,6 +7,7 @@ from flask_mysqldb import MySQL
 from config import Config
 import models
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 from functools import wraps
 
 app = Flask(__name__)
@@ -77,7 +78,7 @@ def registro():
         nombre = request.form['nombre']
         correo = request.form['correo']
         contrasena = request.form['contrasena']
-        rol = request.form.get('rol', 'cliente')
+        rol = 'cliente'
         usuario_existente = models.obtener_usuario_por_correo(mysql, correo)
         
         if usuario_existente:
@@ -447,7 +448,7 @@ def admin_peliculas():
         poster = request.files.get('poster_url')
         poster_url = ''
         if poster and poster.filename:
-            poster_url = poster.filename
+            poster_url = secure_filename(poster.filename)
             poster.save(os.path.join('static/img/posters', poster_url))
 
         models.crear_pelicula(mysql, titulo, genero, clasificacion,
@@ -486,7 +487,7 @@ def guardar_pelicula(id_pelicula):
     poster_url = models.obtener_pelicula_por_id(mysql, id_pelicula)['poster_url']
     poster = request.files.get('poster_url')
     if poster and poster.filename:
-        poster_url = poster.filename
+        poster_url = secure_filename(poster.filename)
         poster.save(os.path.join('static/img/posters', poster_url))
 
     models.actualizar_pelicula(mysql, id_pelicula, titulo, genero, clasificacion,
@@ -571,6 +572,39 @@ def admin_reportes():
     return render_template('admin/reportes.html', resumen=resumen, funciones=funciones,
                            id_funcion_seleccionada=id_funcion, boletas=boletas,
                            totales_funcion=totales_funcion, filtro=filtro)
+
+
+@app.route('/admin/usuarios', methods=['GET', 'POST'])
+@role_required('admin')
+def admin_usuarios():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        contrasena = request.form['contrasena']
+        rol = request.form.get('rol', 'taquillero')
+        if rol not in ('admin', 'taquillero', 'cliente'):
+            rol = 'taquillero'
+        usuario_existente = models.obtener_usuario_por_correo(mysql, correo)
+        if usuario_existente:
+            flash('El correo ya está registrado.', 'error')
+        else:
+            contrasena_hash = generate_password_hash(contrasena)
+            models.crear_usuario(mysql, nombre, correo, contrasena_hash, rol)
+            flash(f'Usuario {rol} creado correctamente.', 'success')
+        return redirect(url_for('admin_usuarios'))
+    usuarios = models.obtener_todos_usuarios(mysql)
+    return render_template('admin/usuarios.html', usuarios=usuarios)
+
+
+@app.route('/admin/usuarios/eliminar/<int:id_usuario>', methods=['POST'])
+@role_required('admin')
+def admin_eliminar_usuario(id_usuario):
+    if id_usuario == session.get('user_id'):
+        flash('No puedes eliminar tu propia cuenta.', 'error')
+    else:
+        models.eliminar_usuario(mysql, id_usuario)
+        flash('Usuario eliminado correctamente.', 'success')
+    return redirect(url_for('admin_usuarios'))
 
 
 if __name__ == '__main__':

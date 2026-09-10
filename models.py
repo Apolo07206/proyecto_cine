@@ -26,6 +26,19 @@ def obtener_usuario_por_id(mysql, id_usuario):
     cur.close()
     return usuario
 
+def obtener_todos_usuarios(mysql):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT id_usuario, nombre, correo, rol, fecha_registro FROM usuario ORDER BY id_usuario")
+    usuarios = cur.fetchall()
+    cur.close()
+    return usuarios
+
+def eliminar_usuario(mysql, id_usuario):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM usuario WHERE id_usuario = %s", (id_usuario,))
+    mysql.connection.commit()
+    cur.close()
+
 
 # --- ESTADÍSTICAS / DASHBOARD ---
 

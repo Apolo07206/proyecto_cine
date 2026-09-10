@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{url_for('static', filename='img/logo.png')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/peliculas.css')}}">
-    <title>Admin - Editar Película</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Admin - Editar Película{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/peliculas.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-peliculas-container">
     <h1>Editar Película</h1>
 
     <h2>{{ pelicula.titulo }}</h2>
@@ -28,6 +28,8 @@
     </form>
 
     <br>
-    <a href="{{ url_for('admin_peliculas') }}">Volver a películas</a>
-</body>
-</html>
+    <div class="volver">
+        <a href="{{ url_for('admin_peliculas') }}" class="volver-dashboard">Volver a películas</a>
+    </div>
+</div>
+{% endblock %}

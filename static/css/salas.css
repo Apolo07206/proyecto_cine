@@ -140,6 +140,18 @@
     border: 1px solid #17a2b8;
 }
 
+.badge-danger {
+    background-color: rgba(176, 0, 32, 0.2);
+    color: #ff8080;
+    border: 1px solid #b00020;
+}
+
+.badge-success {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
 /* Botones y acciones */
 .btn {
     display: inline-block;
@@ -191,4 +203,30 @@
     margin-top: 1.5rem;
     display: flex;
     justify-content: flex-start;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1.5rem 0.75rem;
+    }
+
+    .card-section {
+        padding: 1rem;
+    }
+
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .actions-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .actions-footer .btn {
+        text-align: center;
+    }
 }

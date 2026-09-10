@@ -193,3 +193,32 @@ body{
 .texto-centrado{
     text-align: center;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px 12px;
+    }
+
+    .content-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .card-section {
+        padding: 16px;
+    }
+
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .form-grip {
+        grid-template-columns: 1fr;
+    }
+
+    .volver {
+        margin-bottom: 30px;
+    }
+}
